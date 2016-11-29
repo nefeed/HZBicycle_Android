@@ -1,0 +1,68 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.1"
+    defaultConfig {
+        applicationId "com.gavin.hzbicycle"
+        minSdkVersion 19
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+//        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+//        externalNativeBuild {
+//            cmake {
+//                cppFlags "-std=c++11"
+//            }
+//        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+//    externalNativeBuild {
+//        cmake {
+//            path "CMakeLists.txt"
+//        }
+//    }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:25.0.1'
+    compile 'com.android.support:design:25.0.1'
+    testCompile 'junit:junit:4.12'
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile "org.jetbrains.anko:anko-sdk19:$anko_version"
+    // sdk15, sdk19, sdk21, sdk23 are also available
+    compile "org.jetbrains.anko:anko-support-v4:$anko_version"
+    // In case you need support-v4 bindings
+    compile "org.jetbrains.anko:anko-appcompat-v7:$anko_version" // For appcompat-v7 bindings
+
+    // Gson工具
+    compile 'com.google.code.gson:gson:2.8.0'
+    // 第三方的替代Log的工具
+    compile 'com.orhanobut:logger:1.15'
+    // EventBus
+    compile 'org.greenrobot:eventbus:3.0.0'
+    // SugarRecord
+    compile 'com.github.satyan:sugar:1.5'
+    // Facebook 的Chrome查看App工具，地址： chrome://inspect
+    compile 'com.facebook.stetho:stetho:1.4.1'
+    // ButterKnife 界面控件的绑定器
+    compile 'com.jakewharton:butterknife:8.4.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+}
+repositories {
+    mavenCentral()
+}

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorBasicOrange">#ff9714</color>
+    <color name="colorBasicRed">#ffd62525</color>
+    <color name="colorBasicButtonNormal">#ffe53333</color>
+    <color name="colorBasicButtonDisable">#4DE53333</color>
+    <color name="colorBasicLightRed">#26E53333</color>
+    <color name="colorBasicGreen">#ff5fb000</color>
+    <color name="colorBasicInfoBlue">#ff37a5ff</color>
+    <color name="colorBasicInfoBluePressed">#8837a5ff</color>
+    <color name="colorBasicBackground">#f4f1ef</color>
+    <color name="colorBasicTextDeep">#333333</color>
+    <color name="colorBasicTextShallow">#cccccc</color>
+    <color name="colorBasicWhite">#FFFFFF</color>
+    <color name="colorBasicWhitePressed">#eeeeee</color>
+    <color name="colorBasicLine">#cccccc</color>
+    <color name="colorBasicTextNine">#999999</color>
+    <color name="colorBasicTextSix">#666666</color>
+    <color name="colorBasicTranslucentSixWhite">#88ffffff</color>
+    <color name="colorBasicTranslucentNineWhite">#ddffffff</color>
+    <color name="colorBasicTranslucentNineBlack">#dd000000</color>
+    <color name="colorBasicBule">#ff37a5ff</color>
+</resources>

@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">HZBicycle</string>
+    <string name="permission_dialog_title">感谢您的下载使用</string>
+    <string name="permission_dialog_intro">为了您能正常使用，需要开启以下权限</string>
+    <string name="next">下一步</string>
+
+    <!-- 6.0 android M 需要开启运行时异常校验 -->
+    <string name="permission">权限</string>
+    <string name="no_permissions">缺少必要权限</string>
+    <string name="permission_settings">设置</string>
+    <string name="permission_title">帮助</string>
+    <string name="permission_content">缺少必要权限，是否开启？</string>
+    <string name="permission_ignore">本次忽略</string>
+    <string name="permission_advice_title">开启App</string>
+</resources>
