@@ -18,9 +18,27 @@ android {
 //            }
 //        }
     }
-    buildTypes {
+    signingConfigs {
         release {
-            minifyEnabled false
+            storeFile file("./hz-bicycle.jks")
+            storePassword "hzbicycle"
+            keyAlias "Gavin"
+            keyPassword "hzbicycle"
+        }
+    }
+    buildTypes {
+        debug {
+            buildConfigField "String", "BASE_API_URL", "\"http://www.baidu.com/\""
+            buildConfigField "Boolean", "SWITCH_SERVER_URL", "true"
+        }
+
+        release {
+            buildConfigField "String", "BASE_API_URL", "\"http://www.bing.com/\""
+            buildConfigField "Boolean", "SWITCH_SERVER_URL", "false"
+            signingConfig signingConfigs.release
+            minifyEnabled true
+            shrinkResources true
+            zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -31,6 +49,10 @@ android {
 //    }
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
+    }
+
+    dataBinding {
+        enabled true
     }
 }
 
