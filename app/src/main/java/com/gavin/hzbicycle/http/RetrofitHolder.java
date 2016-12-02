@@ -3,6 +3,7 @@ package com.gavin.hzbicycle.http;
 import android.text.TextUtils;
 
 import com.gavin.hzbicycle.BuildConfig;
+import com.gavin.hzbicycle.data.PreferenceRepository;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -37,10 +38,6 @@ public class RetrofitHolder {
 
     public OkHttpClient getClient() {
         OkHttpClient.Builder _builder = new OkHttpClient.Builder();
-        _builder.interceptors().add(new SignParamsInterceptor());
-        _builder.interceptors().add(new ReceivedCookiesInterceptor());
-        _builder.interceptors().add(new AddCookiesInterceptor());
-        //_builder.interceptors().add(new SocketTimeoutInterceptor());
         return _builder.build();
     }
 
