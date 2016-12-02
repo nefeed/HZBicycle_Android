@@ -84,6 +84,8 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.4.2'
     // Gson工具
     compile 'com.google.code.gson:gson:2.8.0'
+    // 友盟分析
+    compile 'com.umeng.analytics:analytics:latest.integration'
     // 第三方的替代Log的工具
     compile 'com.orhanobut:logger:1.15'
     // EventBus

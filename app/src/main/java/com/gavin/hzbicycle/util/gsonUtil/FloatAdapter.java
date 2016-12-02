@@ -1,4 +1,4 @@
-package com.gavin.hzbicycle.utils.gsonUtil;
+package com.gavin.hzbicycle.util.gsonUtil;
 
 import android.text.TextUtils;
 
@@ -17,28 +17,28 @@ import java.lang.reflect.Type;
  * E-mail: GavinChangCN@163.com
  * Desc:
  * Date: 2016-07-21
- * Time: 11:10
+ * Time: 11:07
  */
-public class LongAdapter implements JsonSerializer<Long>, JsonDeserializer<Long> {
-    protected static final String TAG = "LongAdapter";
+public class FloatAdapter implements JsonSerializer<Float>, JsonDeserializer<Float> {
+    protected static final String TAG = "FloatAdapter";
 
     @Override
-    public Long deserialize(JsonElement json, Type typeOfT,
-                            JsonDeserializationContext context) throws JsonParseException {
+    public Float deserialize(JsonElement json, Type typeOfT,
+                             JsonDeserializationContext context) throws JsonParseException {
         if (json == null || TextUtils.isEmpty(json.getAsString())) {
-            return 0L;
+            return 0.0f;
         } else {
             try {
-                return json.getAsLong();
+                return json.getAsFloat();
             } catch (Exception e) {
-                return 0L;
+                return 0.0f;
             }
         }
     }
 
     @Override
-    public JsonElement serialize(Long src, Type typeOfSrc, JsonSerializationContext context) {
-        Long value = 0L;
+    public JsonElement serialize(Float src, Type typeOfSrc, JsonSerializationContext context) {
+        Float value = 0.0f;
         if (src != null) {
             value = src;
         }

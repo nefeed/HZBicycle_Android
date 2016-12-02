@@ -1,4 +1,4 @@
-package com.gavin.hzbicycle.widgets.dialogs;
+package com.gavin.hzbicycle.widget.dialog;
 
 import android.app.Dialog;
 import android.content.Context;

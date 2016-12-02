@@ -1,6 +1,6 @@
 package com.gavin.hzbicycle.ui.main;
 
-import com.gavin.hzbicycle.ui.base.BaseActivity;
+import com.gavin.hzbicycle.base.BaseActivity;
 
 /**
  * User: Gavin

@@ -14,10 +14,10 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 
 import com.gavin.hzbicycle.R;
-import com.gavin.hzbicycle.utils.PermissionsChecker;
-import com.gavin.hzbicycle.utils.callback.INoDataCallback;
-import com.gavin.hzbicycle.widgets.dialogs.CustomDialog;
-import com.gavin.hzbicycle.widgets.dialogs.PermissionAdviceDialogFragment;
+import com.gavin.hzbicycle.util.PermissionsChecker;
+import com.gavin.hzbicycle.util.callback.INoDataCallback;
+import com.gavin.hzbicycle.widget.dialog.CustomDialog;
+import com.gavin.hzbicycle.widget.dialog.PermissionAdviceDialogFragment;
 
 /**
  * User: Gavin

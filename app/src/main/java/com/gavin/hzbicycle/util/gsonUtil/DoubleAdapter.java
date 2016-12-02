@@ -1,4 +1,4 @@
-package com.gavin.hzbicycle.utils.gsonUtil;
+package com.gavin.hzbicycle.util.gsonUtil;
 
 import android.text.TextUtils;
 
@@ -11,7 +11,6 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
 import java.lang.reflect.Type;
-import java.math.BigDecimal;
 
 /**
  * User: Gavin
@@ -20,26 +19,26 @@ import java.math.BigDecimal;
  * Date: 2016-07-21
  * Time: 11:03
  */
-public class BigDecimalAdapter implements JsonSerializer<BigDecimal>, JsonDeserializer<BigDecimal> {
-    protected static final String TAG = "BigDecimalAdapter";
+public class DoubleAdapter implements JsonSerializer<Double>, JsonDeserializer<Double> {
+    protected static final String TAG = "DoubleAdapter";
 
     @Override
-    public BigDecimal deserialize(JsonElement json, Type typeOfT,
-                                  JsonDeserializationContext context) throws JsonParseException {
+    public Double deserialize(JsonElement json, Type typeOfT,
+                              JsonDeserializationContext context) throws JsonParseException {
         if (json == null || TextUtils.isEmpty(json.getAsString())) {
-            return BigDecimal.valueOf(0.00);
+            return 0.00;
         } else {
             try {
-                return json.getAsBigDecimal();
+                return json.getAsDouble();
             } catch (Exception e) {
-                return BigDecimal.valueOf(0.00);
+                return 0.00;
             }
         }
     }
 
     @Override
-    public JsonElement serialize(BigDecimal src, Type typeOfSrc, JsonSerializationContext context) {
-        BigDecimal value = BigDecimal.valueOf(0.00);
+    public JsonElement serialize(Double src, Type typeOfSrc, JsonSerializationContext context) {
+        Double value = 0.00;
         if (src != null) {
             value = src;
         }

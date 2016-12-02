@@ -1,4 +1,4 @@
-package com.gavin.hzbicycle.utils;
+package com.gavin.hzbicycle.util;
 
 import com.gavin.hzbicycle.BuildConfig;
 import com.orhanobut.logger.Logger;

@@ -1,4 +1,4 @@
-package com.gavin.hzbicycle.widgets.dialogs;
+package com.gavin.hzbicycle.widget.dialog;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.gavin.hzbicycle.R;
-import com.gavin.hzbicycle.utils.callback.INoDataCallback;
+import com.gavin.hzbicycle.util.callback.INoDataCallback;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

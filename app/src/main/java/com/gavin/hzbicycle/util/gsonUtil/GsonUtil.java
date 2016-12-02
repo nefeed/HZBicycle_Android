@@ -1,4 +1,4 @@
-package com.gavin.hzbicycle.utils.gsonUtil;
+package com.gavin.hzbicycle.util.gsonUtil;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

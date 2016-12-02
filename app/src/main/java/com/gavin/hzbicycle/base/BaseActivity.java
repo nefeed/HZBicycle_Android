@@ -1,4 +1,4 @@
-package com.gavin.hzbicycle.ui.base;
+package com.gavin.hzbicycle.base;
 
 import android.Manifest;
 import android.content.Intent;
@@ -6,8 +6,9 @@ import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 
 import com.gavin.hzbicycle.ui.permission.PermissionsActivity;
-import com.gavin.hzbicycle.utils.LogUtil;
-import com.gavin.hzbicycle.utils.PermissionsChecker;
+import com.gavin.hzbicycle.util.LogUtil;
+import com.gavin.hzbicycle.util.PermissionsChecker;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * User: Gavin
@@ -18,6 +19,18 @@ import com.gavin.hzbicycle.utils.PermissionsChecker;
  */
 public class BaseActivity extends AppCompatActivity {
     protected static final String TAG = "BaseActivity";
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
 
     /*********************
      * Permission begin

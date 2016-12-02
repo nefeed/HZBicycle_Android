@@ -3,7 +3,7 @@ package com.gavin.hzbicycle.ui
 import android.os.Bundle
 import android.widget.TextView
 import com.gavin.hzbicycle.R
-import com.gavin.hzbicycle.ui.base.BaseActivity
+import com.gavin.hzbicycle.base.BaseActivity
 
 /**
  * User: Gavin

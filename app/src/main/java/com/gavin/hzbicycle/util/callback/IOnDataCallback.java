@@ -1,4 +1,4 @@
-package com.gavin.hzbicycle.utils.callback;
+package com.gavin.hzbicycle.util.callback;
 
 /**
  * User: Gavin

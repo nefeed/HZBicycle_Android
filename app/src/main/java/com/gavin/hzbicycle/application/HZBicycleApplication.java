@@ -5,6 +5,7 @@ import android.app.Application;
 import com.facebook.stetho.Stetho;
 import com.orhanobut.logger.Logger;
 import com.orm.SugarContext;
+import com.umeng.analytics.MobclickAgent;
 
 public class HZBicycleApplication extends Application {
 
@@ -25,6 +26,15 @@ public class HZBicycleApplication extends Application {
         SugarContext.init(this);
         initStetho();
         Foreground.init(this);
+        initUmeng();
+    }
+
+    /**
+     * 初始化友盟
+     */
+    private void initUmeng() {
+        // 友盟统计
+        MobclickAgent.setScenarioType(getApplicationContext(), MobclickAgent.EScenarioType.E_UM_NORMAL);
     }
 
 

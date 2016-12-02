@@ -1,4 +1,4 @@
-package com.gavin.hzbicycle.utils;
+package com.gavin.hzbicycle.util;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

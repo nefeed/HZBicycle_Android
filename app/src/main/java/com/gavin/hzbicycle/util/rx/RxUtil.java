@@ -1,4 +1,4 @@
-package com.gavin.hzbicycle.utils.rx;
+package com.gavin.hzbicycle.util.rx;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
