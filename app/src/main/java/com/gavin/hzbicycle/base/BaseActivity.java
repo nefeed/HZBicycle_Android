@@ -4,10 +4,15 @@ import android.Manifest;
 import android.content.Intent;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
+import android.view.MotionEvent;
 
+import com.gavin.hzbicycle.R;
 import com.gavin.hzbicycle.ui.permission.PermissionsActivity;
 import com.gavin.hzbicycle.util.LogUtil;
 import com.gavin.hzbicycle.util.PermissionsChecker;
+import com.gavin.hzbicycle.util.slideBack.SlideWindowHelper;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -33,6 +38,58 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     /*********************
+     * Toolbar begin
+     *********************/
+    public void setupToolbar(Toolbar toolbar) {
+        toolbar.setTitle("");
+        toolbar.setNavigationIcon(R.drawable.icon_back);
+        setSupportActionBar(toolbar);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    /*********************
+     * Toolbar end
+     *********************/
+
+    /*********************
+     * 滑动返回 begin
+     *********************/
+    private SlideWindowHelper mSwipeWindowHelper;
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if(!supportSlideBack()) {
+            return super.dispatchTouchEvent(ev);
+        }
+
+        if(mSwipeWindowHelper == null) {
+            mSwipeWindowHelper = new SlideWindowHelper(getWindow());
+        }
+        return mSwipeWindowHelper.processTouchEvent(ev) || super.dispatchTouchEvent(ev);
+    }
+
+    /**
+     * 是否支持滑动返回
+     *
+     * @return boolean
+     */
+    public boolean supportSlideBack() {
+        return true;
+    }
+    /*********************
+     * 滑动返回 end
+     *********************/
+
+    /*********************
      * Permission begin
      *********************/
     protected static final int REQUEST_CODE = 0; // 请求码
@@ -41,9 +98,7 @@ public class BaseActivity extends AppCompatActivity {
     protected static String[] mPermissions = new String[]{
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.CALL_PHONE,
-            Manifest.permission.READ_SMS,
-            Manifest.permission.SEND_SMS
+            Manifest.permission.CALL_PHONE
     };
 
     protected PermissionsChecker mPermissionsChecker; // 权限监测工具

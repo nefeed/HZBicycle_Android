@@ -21,6 +21,7 @@ class MainActivity : BaseActivity() {
 
         // Example of a call to a native method
         val tv = findViewById(R.id.sample_text) as TextView
+        tv.setOnClickListener { v -> AboutActivity.startActivity(this@MainActivity, v) }
 //        tv.text = stringFromJNI()
 
     }

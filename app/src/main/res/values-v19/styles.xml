@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 沉浸式顶栏主题 -->
+    <style name="ImmersedTheme" parent="AppTheme">
+        <item name="android:windowContentOverlay">@null</item>
+        <!--<item name="android:windowIsTranslucent">true</item>-->
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+</resources>

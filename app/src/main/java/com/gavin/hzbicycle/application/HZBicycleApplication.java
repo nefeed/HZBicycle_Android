@@ -1,6 +1,8 @@
 package com.gavin.hzbicycle.application;
 
+import android.app.Activity;
 import android.app.Application;
+import android.view.View;
 
 import com.facebook.stetho.Stetho;
 import com.orhanobut.logger.Logger;
@@ -9,6 +11,7 @@ import com.umeng.analytics.MobclickAgent;
 
 public class HZBicycleApplication extends Application {
 
+    private ActivityLifecycleHelper mActivityLifecycleHelper;
     private static HZBicycleApplication sInstance;
     private boolean mIsLoginned;
     public static boolean sAppIsOpened;
@@ -23,10 +26,30 @@ public class HZBicycleApplication extends Application {
         sAppIsOpened = true;
         sInstance = this;
         Logger.init("HZBicycler");
+        registerActivityLifecycleCallbacks(mActivityLifecycleHelper = new ActivityLifecycleHelper());
         SugarContext.init(this);
         initStetho();
         Foreground.init(this);
         initUmeng();
+    }
+
+    public ActivityLifecycleHelper getActivityLifecycleHelper() {
+        return mActivityLifecycleHelper;
+    }
+
+    public void onSlideBack(boolean isReset, float distance) {
+        if(mActivityLifecycleHelper != null) {
+            Activity lastActivity = mActivityLifecycleHelper.getPreActivity();
+            if(lastActivity != null) {
+                View contentView = lastActivity.findViewById(android.R.id.content);
+                if(isReset) {
+                    contentView.setX(contentView.getLeft());
+                } else {
+                    final int width = getResources().getDisplayMetrics().widthPixels;
+                    contentView.setX(-width / 3 + distance / 3);
+                }
+            }
+        }
     }
 
     /**
