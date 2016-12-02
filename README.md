@@ -1,4 +1,4 @@
-## 瑞士军刀（SwissArmyKnife）-Android
+## 杭州公共自行车（HZBicycle）-Android
 
-- 想要打造一块全能的App开发的基本框架，方便App拿来直接做业务
-- 所以取名：瑞士军刀（SwissArmyKnife）
+- 想要打造一块能够主动获取公共自行车站点信息的 App：便于查询借换车情况
+- 所以取名：杭州公共自行车（HZBicycle）
