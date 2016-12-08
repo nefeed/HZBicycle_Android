@@ -10,7 +10,7 @@ import android.os.PersistableBundle
 import android.view.View
 import com.gavin.hzbicycle.R
 import com.gavin.hzbicycle.base.BaseActivity
-import kotlinx.android.synthetic.main.activity_about.*
+import kotlinx.android.synthetic.main.activity_html.*
 
 /**
  * User: Gavin
@@ -21,16 +21,22 @@ import kotlinx.android.synthetic.main.activity_about.*
  */
 class HtmlActivity : BaseActivity() {
 
+    val mIntentUrl: String by lazy { intent.getStringExtra(INTENT_KEY_URL) }
+
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+        super.onCreate(savedInstanceState, persistentState)
         setContentView(R.layout.activity_html)
         setupToolbar(toolbar)
         tv_title.text = ""
-        super.onCreate(savedInstanceState, persistentState)
+
+        webView.loadUrl(mIntentUrl)
     }
 
     companion object {
-        fun startActivity(context: Context, view: View) {
+        val INTENT_KEY_URL = "url"
+        fun startActivity(context: Context, view: View, url: String) {
             val intent = Intent(context, HtmlActivity::class.java)
+            intent.putExtra(INTENT_KEY_URL, url)
             if (Build.VERSION.SDK_INT > 21) {
                 context.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(context as Activity, view, "html").toBundle())
             } else {

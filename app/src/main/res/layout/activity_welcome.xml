@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rlWelcome"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/wallPaper"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/welcome_bg_10"/>
+
+    <ImageView
+        android:id="@+id/welcomeAppLogo"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="88dp"
+        android:background="@drawable/welcome_info_logo"/>
+
+</RelativeLayout>
