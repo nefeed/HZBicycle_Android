@@ -157,7 +157,7 @@ class MainActivity : BaseActivity() {
         override fun onLocationChanged(amapLocation: AMapLocation?) {
             if (amapLocation != null) {
                 LogUtil.i("自定义高德定位工作了！")
-                    LogUtil.i("获取高德定位信息回调：${GsonUtil.INSTANCE.get().toJson(amapLocation)}")
+                LogUtil.i("获取高德定位信息回调：${GsonUtil.INSTANCE.get().toJson(amapLocation)}")
                 if (amapLocation.errorCode == 0) {
                 //可在其中解析amapLocation获取相应内容。
                 }else {
