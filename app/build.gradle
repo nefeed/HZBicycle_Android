@@ -98,4 +98,5 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
     // 国人发明的有趣的运行时权限获取
     compile 'com.yanzhenjie:permission:1.0.3'
+    compile files('libs/AMap3DMap_4.1.3_AMapNavi_1.9.4_AMapSearch_3.6.1_AMapLocation_3.2.0_20161208.jar')
 }
