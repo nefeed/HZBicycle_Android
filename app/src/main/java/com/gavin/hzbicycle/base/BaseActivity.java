@@ -1,13 +1,21 @@
 package com.gavin.hzbicycle.base;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 
 import com.gavin.hzbicycle.R;
+import com.gavin.hzbicycle.data.bean.BaseView;
 import com.gavin.hzbicycle.util.slideBack.SlideWindowHelper;
+import com.gavin.hzbicycle.widget.toast.CustomToast;
 import com.umeng.analytics.MobclickAgent;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * User: Gavin
@@ -16,7 +24,7 @@ import com.umeng.analytics.MobclickAgent;
  * Date: 2016-11-29
  * Time: 00:43
  */
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends AppCompatActivity implements BaseView {
     protected static final String TAG = "BaseActivity";
 
     @Override
@@ -29,6 +37,73 @@ public class BaseActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);
+    }
+
+    @Override
+    public boolean isNetworkAvailable() {
+        return isNetworkAvailable(true);
+    }
+
+    @Override
+    public boolean isNetworkAvailable(boolean withTip) {
+        ConnectivityManager _manager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo _netInfo = _manager.getActiveNetworkInfo();
+        if (_netInfo == null || !_netInfo.isAvailable()) {
+            if (withTip) {
+                showErrorToast(R.string.network_error);
+            }
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public void showToast(int msg) {
+        if (msg == 0) {
+            return;
+        }
+        CustomToast.INSTANCE.showToast(getApplicationContext(), msg);
+    }
+
+    @Override
+    public void showToast(@NotNull String msg) {
+        if (TextUtils.isEmpty(msg)) {
+            return;
+        }
+        CustomToast.INSTANCE.showToast(getApplicationContext(), msg);
+    }
+
+    @Override
+    public void showSuccessToast(int msg) {
+        if (msg == 0) {
+            return;
+        }
+        CustomToast.INSTANCE.showSuccessToast(getApplicationContext(), msg);
+    }
+
+    @Override
+    public void showSuccessToast(@NotNull String msg) {
+        if (TextUtils.isEmpty(msg)) {
+            return;
+        }
+        CustomToast.INSTANCE.showSuccessToast(getApplicationContext(), msg);
+    }
+
+    @Override
+    public void showErrorToast(int msg) {
+        if (msg == 0) {
+            return;
+        }
+        CustomToast.INSTANCE.showErrorToast(getApplicationContext(), msg);
+    }
+
+    @Override
+    public void showErrorToast(@NotNull String msg) {
+        if (TextUtils.isEmpty(msg)) {
+            return;
+        }
+        CustomToast.INSTANCE.showErrorToast(getApplicationContext(), msg);
     }
 
     /*********************
@@ -79,6 +154,7 @@ public class BaseActivity extends AppCompatActivity {
     public boolean supportSlideBack() {
         return true;
     }
+
     /*********************
      * 滑动返回 end
      *********************/

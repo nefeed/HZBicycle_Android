@@ -114,7 +114,8 @@
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:theme="@android:style/Theme.Translucent" />
 
-        <activity android:name=".ui.MainActivity"
+        <activity android:name=".ui.main.MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/ImmersedTheme" />
         <activity android:name=".ui.permission.PermissionActivity"
             android:theme="@style/ImmersedTheme" />

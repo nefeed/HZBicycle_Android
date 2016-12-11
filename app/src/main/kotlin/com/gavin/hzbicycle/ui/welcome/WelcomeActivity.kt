@@ -9,7 +9,7 @@ import android.view.animation.Animation
 import android.view.animation.ScaleAnimation
 import com.gavin.hzbicycle.R
 import com.gavin.hzbicycle.base.BaseActivity
-import com.gavin.hzbicycle.ui.MainActivity
+import com.gavin.hzbicycle.ui.main.MainActivity
 import com.gavin.hzbicycle.util.LogUtil
 import com.gavin.hzbicycle.util.PermissionsChecker
 import com.google.android.gms.ads.AdListener

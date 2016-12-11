@@ -1,23 +1,28 @@
-package com.gavin.hzbicycle.ui
+package com.gavin.hzbicycle.ui.main
 
+import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.os.Bundle
+import android.text.SpannableString
 import android.view.View
 import android.widget.TextView
 import com.amap.api.location.AMapLocationClient
 import com.amap.api.location.AMapLocationClientOption
 import com.amap.api.location.AMapLocationListener
 import com.amap.api.maps.*
-import com.amap.api.maps.model.LatLng
+import com.amap.api.maps.AMap.OnInfoWindowClickListener
+import com.amap.api.maps.model.*
 import com.gavin.hzbicycle.R
 import com.gavin.hzbicycle.base.BaseActivity
+import com.gavin.hzbicycle.data.bean.BicycleStationBean
+import com.gavin.hzbicycle.ui.AboutActivity
+import com.gavin.hzbicycle.util.GCJ2WGS
 import com.gavin.hzbicycle.util.LogUtil
 import com.gavin.hzbicycle.widget.button.NoDoubleClickListener
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.onClick
 import java.text.SimpleDateFormat
 import java.util.*
-
-
 
 
 
@@ -29,7 +34,7 @@ import java.util.*
  * Date: 2016-11-29
  * Time: 00:28
  */
-class MainActivity : BaseActivity() {
+class MainActivity : BaseActivity(), MainContract.View, AMap.InfoWindowAdapter {
 
     val mMapView: MapView by lazy { findViewById(R.id.map) as MapView }
     val mAMap: AMap by lazy { mMapView.map }
@@ -41,19 +46,17 @@ class MainActivity : BaseActivity() {
 
     // 自定义的 View 防双击点击事件
     val mClickListener: CustomClickListener by lazy { CustomClickListener() }
+    val mConverter:CoordinateConverter by lazy {CoordinateConverter(applicationContext)}
 
     var mLatitude: Double = 0.toDouble() // 纬度
     var mLongitude: Double = 0.toDouble() // 经度
 
+    val mPresenter: MainContract.Presenter by lazy { MainPresenter(this@MainActivity) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-//        checkPermission()
         initAMap(savedInstanceState)
-        // Example of a call to a native method
-        val tv = findViewById(R.id.sample_text) as TextView
-        tv.setOnClickListener(mClickListener)
-//        tv.text = stringFromJNI()
         ibSetting.setOnClickListener(mClickListener)
     }
 
@@ -63,7 +66,14 @@ class MainActivity : BaseActivity() {
     fun initAMap(savedInstanceState: Bundle?) {
         //在activity执行onCreate时执行mMapView.onCreate(savedInstanceState)，实现地图生命周期管理
         mMapView.onCreate(savedInstanceState)
+
+        // 移动地图初始位置为浙江省政府位置
+        mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(30.266511, 120.152734), 16f))
+
         mAMap.mapType = AMap.MAP_TYPE_NORMAL
+        // 设置定位的类型为定位模式 ，可以由定位、跟随或地图根据面向方向旋转几种
+        mAMap.setMyLocationType(AMap.LOCATION_TYPE_LOCATE)
+        setupLocationStyle()
         //设置定位回调监听
         mLocationClient.setLocationListener(mLocationListener)
 
@@ -96,16 +106,43 @@ class MainActivity : BaseActivity() {
 
         mAMap.isMyLocationEnabled = true // 进入时默认触发高德定位
 
+        val _infoWindowListener = OnInfoWindowClickListener { marker ->  }
+        val _markerClickListener = AMap.OnMarkerClickListener { marker -> false }
+
+        // 绑定Marker信息窗点击事件
+        mAMap.setOnMarkerClickListener(_markerClickListener)
+        mAMap.setOnInfoWindowClickListener(_infoWindowListener)
+        mAMap.setInfoWindowAdapter(this@MainActivity)
+
         //启动定位  onResume（）中进行定位
         mLocationClient.startLocation()
+    }
+
+    private val STROKE_COLOR = Color.argb(30, 16, 118, 244)
+    private val FILL_COLOR = Color.argb(80, 16, 118, 244)
+
+    /**
+     * 设置自定义定位样式
+     */
+    fun setupLocationStyle() {
+        // 自定义系统定位蓝点
+        val myLocationStyle = MyLocationStyle()
+        // 自定义定位蓝点图标
+        myLocationStyle.myLocationIcon(BitmapDescriptorFactory.fromResource(R.drawable.main_gps_point))
+        // 自定义精度范围的圆形边框颜色
+        myLocationStyle.strokeColor(STROKE_COLOR)
+        //自定义精度范围的圆形边框宽度
+        myLocationStyle.strokeWidth(5f)
+        // 设置圆形的填充颜色
+        myLocationStyle.radiusFillColor(FILL_COLOR)
+        // 将自定义的 myLocationStyle 对象添加到地图上
+        mAMap.setMyLocationStyle(myLocationStyle)
     }
 
     override fun onResume() {
         super.onResume()
         //在activity执行onResume时执行mMapView.onResume ()，实现地图生命周期管理
         mMapView.onResume()
-        //启动定位
-//        mLocationClient.startLocation()
     }
 
     override fun onPause() {
@@ -136,11 +173,6 @@ class MainActivity : BaseActivity() {
                         AboutActivity.startActivity(this@MainActivity, v)
                     }
                 }
-                R.id.sample_text -> {
-                    if (v != null) {
-                        HtmlActivity.startActivity(this@MainActivity, v, "https://github.com/GavinChangCN")
-                    }
-                }
             }
         }
     }
@@ -159,7 +191,7 @@ class MainActivity : BaseActivity() {
 //        }
 //    }
 
-    var mLocationChangeListener: LocationSource.OnLocationChangedListener?= null
+    var mLocationChangeListener: LocationSource.OnLocationChangedListener? = null
 
     /**
      * 自带高德地图定位监听器
@@ -197,9 +229,18 @@ class MainActivity : BaseActivity() {
                 LogUtil.i("获取高德定位信息回调：\n 定位来源：$_locationType \n纬度，经度：($mLatitude，$mLongitude)\n 精度信息：$_accuracy\n 时间：$_date")
 
                 // 设置当前地图显示为当前位置
-                mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(mLatitude, mLongitude), 50f))
+                mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(mLatitude, mLongitude), 16f))
                 //点击定位按钮 能够将地图的中心移动到定位点
                 mLocationChangeListener?.onLocationChanged(amapLocation)
+                // CoordType.GPS 待转换坐标类型
+                mConverter.from(CoordinateConverter.CoordType.BAIDU)
+                val _location :LatLng = GCJ2WGS.convert(mLatitude, mLongitude)
+                for (it in mMarkerArray) {
+                    it.remove()
+                }
+                mMarkerArray.clear()
+                mPresenter.loadNearbyBicycleStationData(_location.latitude, _location.longitude)
+
 //                val markerOptions = MarkerOptions()
 //                markerOptions.position(LatLng(mLatitude, mLongitude))
 //                markerOptions.title("当前位置")
@@ -217,4 +258,79 @@ class MainActivity : BaseActivity() {
         ibLocation.setImageResource(R.drawable.main_location)
         ibLocation.isEnabled = true
     }
+
+    val mMarkerArray by lazy { ArrayList<Marker>() }
+    override fun updateNearbyBicycleStationData(data: ArrayList<BicycleStationBean>) {
+        for (it in data) {
+
+            // sourceLatLng待转换坐标点 LatLng类型
+            mConverter.coord(LatLng(it.lat, it.lon))
+            // 执行转换操作
+            val _desLatLng = mConverter.convert()
+            val _markOptions = MarkerOptions()
+                    .position(_desLatLng)
+                    .draggable(false)
+                    .title("  ${it.name}(编号：${it.number})  ")
+                    .snippet("  可借：${it.rentcount}    可还：${it.restorecount}")
+                    .icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(resources, R.drawable.main_bicycle)))
+            val _marker:Marker = mAMap.addMarker(_markOptions)
+            mMarkerArray.add(_marker)
+        }
+    }
+
+    /******************************************
+     *
+     *   高德地图标记点的点击信息窗口 Begin
+     *
+     ******************************************/
+    override fun getInfoContents(marker: Marker): View? {
+        val infoContent = layoutInflater.inflate(
+                R.layout.custom_info_contents, null)
+        render(marker, infoContent)
+        return infoContent
+    }
+
+    override fun getInfoWindow(marker: Marker): View? {
+        val infoWindow = layoutInflater.inflate(
+                R.layout.custom_info_window, null)
+
+        render(marker, infoWindow)
+        return infoWindow
+    }
+
+    /**
+     * 自定义infowinfow窗口
+     */
+    fun render(marker: Marker, view: View) {
+        val title = marker.title
+        val titleUi = view.findViewById(R.id.title) as TextView
+        if (title != null) {
+            val titleText = SpannableString(title)
+//            titleText.setSpan(ForegroundColorSpan(Color.RED), 0,
+//                    titleText.length, 0)
+//            titleUi.textSize = 15f
+            titleUi.text = titleText
+
+        } else {
+            titleUi.text = ""
+        }
+        val snippet = marker.snippet
+        val snippetUi = view.findViewById(R.id.snippet) as TextView
+        if (snippet != null) {
+            val snippetText = SpannableString(snippet)
+//            snippetText.setSpan(ForegroundColorSpan(Color.GREEN), 0,
+//                    snippetText.length, 0)
+//            snippetUi.textSize = 20f
+            snippetUi.text = snippetText
+        } else {
+            snippetUi.text = ""
+        }
+    }
+
+    /******************************************
+     *
+     *   高德地图标记点的点击信息窗口 End
+     *
+     ******************************************/
+
 }

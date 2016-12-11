@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#30435e</color>
+    <color name="colorPrimaryDark">#30435e</color>
+    <color name="colorAccent">#ffffff</color>
+
+    <color name="basic_white">#FFFFFF</color>
+    <color name="basic_white_light">#DCDCDC</color>
+    <color name="basic_white_gray">#9B9B9B</color>
 
     <!--mask-->
     <color name="colorMaskBackground">#88aaaaaa</color>
@@ -12,4 +16,7 @@
 
     <!-- dialog line -->
     <color name="colorDialogLine">#ececec</color>
+
+    <!--custom toast-->
+    <color name="toast_background">#66000000</color>
 </resources>

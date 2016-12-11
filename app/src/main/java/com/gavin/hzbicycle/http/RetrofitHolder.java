@@ -21,16 +21,21 @@ public class RetrofitHolder {
     protected static final String TAG = "RetrofitHolder";
     private Retrofit mRetrofit;
 
-    private RetrofitHolder() {
+    private RetrofitHolder(boolean isBaseApi) {
         Retrofit.Builder _builder = new Retrofit.Builder();
-        String _url = BuildConfig.BASE_API_URL;
-        if (BuildConfig.SWITCH_SERVER_URL && !TextUtils.isEmpty(PreferenceRepository.INSTANCE.getRootUrl())) {
-            _url = PreferenceRepository.INSTANCE.getRootUrl();
+        String _url;
+        if (isBaseApi) {
+            _url = BuildConfig.BASE_API_URL;
+            if (BuildConfig.SWITCH_SERVER_URL && !TextUtils.isEmpty(PreferenceRepository.INSTANCE.getRootUrl())) {
+                _url = PreferenceRepository.INSTANCE.getRootUrl();
+            }
+        } else {
+            _url =  "http://c.ggzxc.com.cn/";
         }
         mRetrofit = _builder
                 .baseUrl(_url)//注意此处,设置服务器的地址
-                .addConverterFactory(GsonConverterFactory.create())//用于Json数据的转换
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())//用于返回Rxjava调用,同步
+                .addConverterFactory(GsonConverterFactory.create()) // 用于Json数据的转换
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create()) // 用于返回Rxjava调用,同步
 //                .addCallAdapterFactory(RxJavaCallAdapterFactory.createWithScheduler(Schedulers.io()))//异步
                 .client(getClient())
                 .build();
@@ -46,13 +51,23 @@ public class RetrofitHolder {
     }
 
 
-    //在访问HttpMethods时创建单例
-    private static class SingletonHolder {
-        private static final RetrofitHolder INSTANCE = new RetrofitHolder();
+    // 在访问BaseApiHttpMethods时创建单例
+    private static class BaseApiSingletonHolder {
+        private static final RetrofitHolder INSTANCE = new RetrofitHolder(true);
     }
 
-    //获取单例
-    public static RetrofitHolder getInstance() {
-        return SingletonHolder.INSTANCE;
+    // 在访问CustomApiHttpMethods时创建单例
+    private static class CustomApiSingletonHolder {
+        private static final RetrofitHolder INSTANCE = new RetrofitHolder(false);
+    }
+
+    // 获取BaseApi单例
+    public static RetrofitHolder getBaseApiInstance() {
+        return BaseApiSingletonHolder.INSTANCE;
+    }
+
+    // 获取 CustomApi 单例
+    public static RetrofitHolder getCustomApiInstance() {
+        return CustomApiSingletonHolder.INSTANCE;
     }
 }
