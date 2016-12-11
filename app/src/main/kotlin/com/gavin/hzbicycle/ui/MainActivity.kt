@@ -1,6 +1,5 @@
 package com.gavin.hzbicycle.ui
 
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -8,9 +7,7 @@ import com.amap.api.location.AMapLocationClient
 import com.amap.api.location.AMapLocationClientOption
 import com.amap.api.location.AMapLocationListener
 import com.amap.api.maps.*
-import com.amap.api.maps.model.BitmapDescriptorFactory
 import com.amap.api.maps.model.LatLng
-import com.amap.api.maps.model.MarkerOptions
 import com.gavin.hzbicycle.R
 import com.gavin.hzbicycle.base.BaseActivity
 import com.gavin.hzbicycle.util.LogUtil
@@ -75,7 +72,7 @@ class MainActivity : BaseActivity() {
         //设置是否返回地址信息（默认返回地址信息）
         mLocationOption.isNeedAddress = true
         //设置是否只定位一次,默认为false
-        mLocationOption.isOnceLocation = false
+        mLocationOption.isOnceLocation = true
         //设置是否强制刷新WIFI，默认为强制刷新
         mLocationOption.isWifiActiveScan = true
         //设置是否允许模拟位置,默认为false，不允许模拟位置
@@ -84,18 +81,21 @@ class MainActivity : BaseActivity() {
         mLocationOption.interval = 2000
         //给定位客户端对象设置定位参数
         mLocationClient.setLocationOption(mLocationOption)
-        //启动定位  onResume（）中进行定位
-        mLocationClient.startLocation()
 
-        mUiSettings.isZoomControlsEnabled = false // 不显示放大缩小按钮
+        mUiSettings.isZoomControlsEnabled = false // 是否显示放大缩小按钮
 
         mAMap.setLocationSource(InnerLocationSource())
-        mUiSettings.isMyLocationButtonEnabled = false // 不显示高德自带的定位按钮
-        ibLocation.onClick { mLocationClient.startLocation() } // 触发高德的定位
+        mUiSettings.isMyLocationButtonEnabled = false // 是否显示高德自带的定位按钮
+        ibLocation.onClick {
+            ibLocation.setImageDrawable(resources.getDrawable(R.drawable.main_location_marker))
+            mLocationClient.startLocation()
+        } // 触发高德的定位
         mUiSettings.isScaleControlsEnabled = true //显示比例尺控件
 
         mAMap.isMyLocationEnabled = true // 进入时默认触发高德定位
 
+        //启动定位  onResume（）中进行定位
+        mLocationClient.startLocation()
     }
 
     override fun onResume() {
@@ -157,16 +157,20 @@ class MainActivity : BaseActivity() {
 //        }
 //    }
 
+    var mLocationChangeListener: LocationSource.OnLocationChangedListener?= null
+
     /**
      * 自带高德地图定位监听器
      */
     inner class InnerLocationSource : LocationSource {
         override fun deactivate() {
             LogUtil.i("高德自带定位停止工作了！")
+            mLocationChangeListener = null
         }
 
         override fun activate(listener: LocationSource.OnLocationChangedListener?) {
             LogUtil.i("高德自带定位开始工作了！")
+            mLocationChangeListener = listener
         }
 
     }
@@ -191,18 +195,21 @@ class MainActivity : BaseActivity() {
                 LogUtil.i("获取高德定位信息回调：\n 定位来源：$_locationType \n纬度，经度：($mLatitude，$mLongitude)\n 精度信息：$_accuracy\n 时间：$_date")
 
                 // 设置当前地图显示为当前位置
-                mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(mLatitude, mLongitude), 19f))
-                val markerOptions = MarkerOptions()
-                markerOptions.position(LatLng(mLatitude, mLongitude))
-                markerOptions.title("当前位置")
-                markerOptions.visible(true)
-                val bitmapDescriptor = BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(resources, R.drawable.main_location_marker))
-                markerOptions.icon(bitmapDescriptor)
-                mAMap.addMarker(markerOptions)
+                mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(mLatitude, mLongitude), 50f))
+                //点击定位按钮 能够将地图的中心移动到定位点
+                mLocationChangeListener?.onLocationChanged(amapLocation)
+//                val markerOptions = MarkerOptions()
+//                markerOptions.position(LatLng(mLatitude, mLongitude))
+//                markerOptions.title("当前位置")
+//                markerOptions.visible(true)
+//                val bitmapDescriptor = BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(resources, R.drawable.main_location_marker))
+//                markerOptions.icon(bitmapDescriptor)
+//                mAMap.addMarker(markerOptions)
             } else {
                 //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
                 LogUtil.e("location Error, ErrCode:${amapLocation.errorCode}, errInfo:${amapLocation.errorInfo}")
             }
         }
+        ibLocation.setImageDrawable(resources.getDrawable(R.drawable.main_location))
     }
 }
