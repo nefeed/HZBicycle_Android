@@ -87,7 +87,9 @@ class MainActivity : BaseActivity() {
         mAMap.setLocationSource(InnerLocationSource())
         mUiSettings.isMyLocationButtonEnabled = false // 是否显示高德自带的定位按钮
         ibLocation.onClick {
-            ibLocation.setImageDrawable(resources.getDrawable(R.drawable.main_location_marker))
+            ibLocation.isEnabled = false
+            ibLocation.setImageResource(R.drawable.null_content)
+            pbLocation.visibility = View.VISIBLE
             mLocationClient.startLocation()
         } // 触发高德的定位
         mUiSettings.isScaleControlsEnabled = true //显示比例尺控件
@@ -210,6 +212,9 @@ class MainActivity : BaseActivity() {
                 LogUtil.e("location Error, ErrCode:${amapLocation.errorCode}, errInfo:${amapLocation.errorInfo}")
             }
         }
-        ibLocation.setImageDrawable(resources.getDrawable(R.drawable.main_location))
+
+        pbLocation.visibility = View.GONE
+        ibLocation.setImageResource(R.drawable.main_location)
+        ibLocation.isEnabled = true
     }
 }
