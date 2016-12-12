@@ -88,7 +88,7 @@ class WelcomeActivity : BaseActivity() {
             newStartIndex = mRandom.nextInt(mScaleAnims.size)
         } while (newStartIndex == mStartIndex)
         mStartIndex = newStartIndex
-        val _scaleAnim = mScaleAnims[mStartIndex % mImages.size]
+        val _scaleAnim = mScaleAnims[mStartIndex % mScaleAnims.size]
         wallPaper.startAnimation(_scaleAnim.apply {
             repeatCount = 1
             repeatMode = Animation.REVERSE

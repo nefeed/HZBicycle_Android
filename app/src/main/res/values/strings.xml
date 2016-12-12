@@ -22,4 +22,6 @@
     <string name="offline_map">离线地图</string>
     <string name="city_hangzhou">杭州</string>
     <string name="setting_download">下载</string>
+    <string name="setting_remove">删除</string>
+    <string name="setting_pause">删除</string>
 </resources>

@@ -15,7 +15,6 @@ import com.amap.api.maps.model.*
 import com.gavin.hzbicycle.R
 import com.gavin.hzbicycle.base.BaseActivity
 import com.gavin.hzbicycle.data.bean.BicycleStationBean
-import com.gavin.hzbicycle.ui.AboutActivity
 import com.gavin.hzbicycle.ui.SettingActivity
 import com.gavin.hzbicycle.util.GCJ2WGS
 import com.gavin.hzbicycle.util.LogUtil
@@ -85,7 +84,7 @@ class MainActivity : BaseActivity(), MainContract.View, AMap.InfoWindowAdapter {
         //设置是否只定位一次,默认为false
         mLocationOption.isOnceLocation = true
         //设置是否强制刷新WIFI，默认为强制刷新
-        mLocationOption.isWifiActiveScan = true
+        mLocationOption.isWifiScan = true
         //设置是否允许模拟位置,默认为false，不允许模拟位置
         mLocationOption.isMockEnable = false
         //设置定位间隔,单位毫秒,默认为2000ms
