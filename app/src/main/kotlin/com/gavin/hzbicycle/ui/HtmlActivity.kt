@@ -11,6 +11,7 @@ import android.view.View
 import com.gavin.hzbicycle.R
 import com.gavin.hzbicycle.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_html.*
+import kotlinx.android.synthetic.main.toolbar_normal_layout.*
 
 /**
  * User: Gavin
@@ -27,7 +28,7 @@ class HtmlActivity : BaseActivity() {
         super.onCreate(savedInstanceState, persistentState)
         setContentView(R.layout.activity_html)
         setupToolbar(toolbar)
-        tv_title.text = ""
+        tvTitle.text = ""
 
         webView.loadUrl(mIntentUrl)
     }

@@ -16,6 +16,7 @@ import com.gavin.hzbicycle.R
 import com.gavin.hzbicycle.base.BaseActivity
 import com.gavin.hzbicycle.data.bean.BicycleStationBean
 import com.gavin.hzbicycle.ui.AboutActivity
+import com.gavin.hzbicycle.ui.SettingActivity
 import com.gavin.hzbicycle.util.GCJ2WGS
 import com.gavin.hzbicycle.util.LogUtil
 import com.gavin.hzbicycle.widget.button.NoDoubleClickListener
@@ -170,7 +171,7 @@ class MainActivity : BaseActivity(), MainContract.View, AMap.InfoWindowAdapter {
             when (v?.id) {
                 R.id.ibSetting -> {
                     if (v != null) {
-                        AboutActivity.startActivity(this@MainActivity, v)
+                        SettingActivity.startActivity(this@MainActivity, v)
                     }
                 }
             }

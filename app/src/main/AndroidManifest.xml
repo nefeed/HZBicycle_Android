@@ -63,6 +63,7 @@
         android:name=".application.HZBicycleApplication"
         android:allowBackup="true"
         android:configChanges="orientation|keyboardHidden"
+        android:screenOrientation="portrait"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
@@ -119,6 +120,7 @@
             android:theme="@style/ImmersedTheme" />
         <activity android:name=".ui.permission.PermissionActivity"
             android:theme="@style/ImmersedTheme" />
+        <activity android:name=".ui.SettingActivity" />
         <activity android:name=".ui.AboutActivity"/>
         <activity android:name=".ui.HtmlActivity" />
 

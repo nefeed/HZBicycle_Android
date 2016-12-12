@@ -16,4 +16,10 @@
     <string name="permission_content">缺少必要权限，是否开启？</string>
     <string name="permission_ignore">本次忽略</string>
     <string name="permission_advice_title">开启App</string>
+    <string name="contract_service">联系客服</string>
+    <string name="feed_back">意见反馈</string>
+    <string name="about_hzbicycle">关于 HZBicycle</string>
+    <string name="offline_map">离线地图</string>
+    <string name="city_hangzhou">杭州</string>
+    <string name="setting_download">下载</string>
 </resources>

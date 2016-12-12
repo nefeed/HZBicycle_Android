@@ -15,23 +15,23 @@ import kotlinx.android.synthetic.main.toolbar_normal_layout.*
  * User: Gavin
  * E-mail: GavinChangCN@163.com
  * Desc:
- * Date: 2016-12-02
- * Time: 17:15
+ * Date: 2016-12-12
+ * Time: 11:11
  */
-class AboutActivity : BaseActivity() {
+class SettingActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setContentView(R.layout.activity_about)
+        setContentView(R.layout.activity_setting)
         setupToolbar(toolbar)
-        tvTitle.text = "关于HZBicycle"
+        tvTitle.text = "设置"
         super.onCreate(savedInstanceState)
     }
 
     companion object {
         fun startActivity(context: Context, view: View) {
-            val intent = Intent(context, AboutActivity::class.java)
+            val intent = Intent(context, SettingActivity::class.java)
             if (Build.VERSION.SDK_INT > 21) {
-                context.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(context as Activity, view, "about").toBundle())
+                context.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(context as Activity, view, "setting").toBundle())
             } else {
                 context.startActivity(intent)
             }
