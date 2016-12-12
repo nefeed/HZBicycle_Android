@@ -276,6 +276,9 @@ class MainActivity : BaseActivity(), MainContract.View, AMap.InfoWindowAdapter {
             val _marker:Marker = mAMap.addMarker(_markOptions)
             mMarkerArray.add(_marker)
         }
+        if (mMarkerArray.size > 0) {
+            mMarkerArray[0].showInfoWindow()
+        }
     }
 
     /******************************************
