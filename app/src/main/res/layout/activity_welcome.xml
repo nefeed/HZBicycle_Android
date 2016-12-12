@@ -17,7 +17,8 @@
         android:id="@+id/welcomeAppLogo"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="88dp"
-        android:background="@drawable/welcome_info_logo"/>
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:src="@drawable/welcome_info_logo"/>
 
 </RelativeLayout>
