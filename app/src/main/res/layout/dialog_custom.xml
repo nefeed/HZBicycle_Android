@@ -62,7 +62,7 @@
                 android:background="@drawable/custom_dialog_left_button_bg"
                 android:gravity="center"
                 android:stateListAnimator="@null"
-                android:textColor="@color/colorBasicButtonNormal"
+                android:textColor="@color/colorPrimary"
                 android:textSize="17sp" />
 
             <View
@@ -79,7 +79,7 @@
                 android:background="@drawable/custom_dialog_right_button_bg"
                 android:gravity="center"
                 android:stateListAnimator="@null"
-                android:textColor="@color/colorBasicButtonNormal"
+                android:textColor="@color/colorPrimary"
                 android:textSize="17sp" />
         </LinearLayout>
     </LinearLayout>

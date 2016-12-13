@@ -4,6 +4,8 @@
     <string name="permission_dialog_intro">为了您能正常使用，需要开启以下权限</string>
     <string name="next">下一步</string>
     <string name="network_error">网络不给力,请检查网络后重试</string>
+    <string name="about_hz_bicycle_introduce">\t\tHZBicycle是一款面向杭州公共自行车的轻量级应用，他可以帮助你寻找附近的公共自行车租赁点的车位情况，包括查询可以租借和归还的数量等功能。</string>
+    <string name="about_hz_bicycle_one_more_thing">\t\t由于 App 属于个人开发，所以可能功能并不完善，或者存在一些 Bug，欢迎使用者进行邮件反馈（回到上一级页面），我将不断完善该 App，感谢您的信任与使用。</string>
 
     <!-- Google Ads -->
     <string name="interstitial_ad_welcome_id">ca-app-pub-6275555609904049/8028650612</string>
@@ -24,4 +26,10 @@
     <string name="setting_download">下载</string>
     <string name="setting_remove">删除</string>
     <string name="setting_pause">删除</string>
+    <string name="dialog_cancel">取消</string>
+    <string name="dialog_ok">确定</string>
+    <string name="dialog_service_call">呼叫</string>
+    <string name="requires_phone_call_permission">缺少电话相关权限，请进入 设置-应用程序-权限设置 中进行配置！</string>
+    <string name="dialog_feedback_service_call_msg">&lt;font color = \'#333333\'&gt;客服热线&lt;/font&gt;&lt;br&gt;&lt;big&gt;&lt;big&gt;&lt;font color = \'#333333\'&gt;%s&lt;/font&gt;&lt;/big&gt;&lt;/big&gt;&lt;br&gt;&lt;small&gt;&lt;font color = \'#666666\'&gt;服务时间: 09:00-21:00&lt;/font&gt;&lt;/small&gt;</string>
+
 </resources>

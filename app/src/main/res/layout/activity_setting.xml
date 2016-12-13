@@ -7,191 +7,204 @@
 
     <include layout="@layout/toolbar_normal_layout" />
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/item_vertical_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:background="@drawable/background_setting_item_map_rectangle"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:scrollbarThumbVertical="@android:color/transparent">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/background_setting_item_top_rectangle">
-
-            <TextView
-                android:id="@+id/tvOfflineMapTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:textColor="@color/basic_white"
-                android:textSize="16sp"
-                android:text="@string/offline_map" />
-
-            <TextView
-                android:id="@+id/tvOfflineMapCity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="@dimen/item_vertical_margin"
-                android:layout_marginBottom="@dimen/item_vertical_margin"
-                android:layout_below="@+id/tvOfflineMapTitle"
-                android:textColor="@color/basic_white"
-                android:textSize="14sp"
-                android:text="@string/city_hangzhou" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@+id/tvOfflineMapCity"
-                android:layout_alignBottom="@+id/tvOfflineMapCity"
-                android:orientation="horizontal">
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/item_vertical_margin"
+                android:background="@drawable/background_setting_item_map_rectangle"
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tvOfflineMapDownloading"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/basic_white"
-                    android:textSize="10sp"
-                    android:text="5.34/"
-                    android:visibility="gone"/>
+                    android:background="@drawable/background_setting_item_top_rectangle">
 
-                <TextView
-                    android:id="@+id/tvOfflineMapData"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/tvOfflineMapTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
+                        android:text="@string/offline_map"
+                        android:textColor="@color/basic_white"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/tvOfflineMapCity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvOfflineMapTitle"
+                        android:layout_marginBottom="@dimen/item_vertical_margin"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_marginTop="@dimen/item_vertical_margin"
+                        android:text="@string/city_hangzhou"
+                        android:textColor="@color/basic_white"
+                        android:textSize="14sp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/tvOfflineMapCity"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@+id/tvOfflineMapCity"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvOfflineMapDownloading"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="5.34/"
+                            android:textColor="@color/basic_white"
+                            android:textSize="10sp"
+                            android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/tvOfflineMapData"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="17.35 MB"
+                            android:textColor="@color/basic_white"
+                            android:textSize="10sp" />
+
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/btnOfflineMap"
+                        android:layout_width="50dp"
+                        android:layout_height="25dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
+                        android:background="@drawable/background_setting_button_normal_rectangle"
+                        android:text="@string/setting_download"
+                        android:textColor="@color/basic_white"
+                        android:textSize="14sp" />
+
+                </RelativeLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/basic_white"
-                    android:textSize="10sp"
-                    android:text="17.35 MB" />
+                    android:scaleType="fitXY"
+                    android:src="@drawable/setting_map_hangzhou" />
 
             </LinearLayout>
 
-            <Button
-                android:id="@+id/btnOfflineMap"
-                android:layout_width="50dp"
-                android:layout_height="25dp"
-                android:layout_alignParentRight="true"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/item_final_vertical_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:layout_centerVertical="true"
-                android:textColor="@color/basic_white"
-                android:textSize="14sp"
-                android:text="@string/setting_download"
-                android:background="@drawable/background_setting_button_normal_rectangle"/>
+                android:layout_marginTop="@dimen/item_vertical_margin"
+                android:background="@drawable/background_setting_item_normal_rectangle"
+                android:orientation="vertical">
 
-        </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/rLayoutPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/item_height"
+                    android:layout_marginTop="5dp">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scaleType="fitXY"
-            android:src="@drawable/setting_map_hangzhou"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:text="@string/contract_service"
+                        android:textColor="@color/basic_white"
+                        android:textSize="14sp" />
 
-    </LinearLayout>
+                    <ImageView
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/setting_tel" />
+                </RelativeLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/item_vertical_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_marginBottom="@dimen/item_final_vertical_margin"
-        android:background="@drawable/background_setting_item_normal_rectangle"
-        android:orientation="vertical">
-        
-        <RelativeLayout
-            android:id="@+id/rLayoutPhone"
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/item_height">
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/item_horizontal_margin"
+                    android:layout_marginRight="@dimen/item_horizontal_margin"
+                    android:background="@color/colorBasicLine" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:textColor="@color/basic_white"
-                android:textSize="14sp"
-                android:text="@string/contract_service"/>
+                <RelativeLayout
+                    android:id="@+id/rLayoutMail"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/item_height">
 
-            <ImageView
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:src="@drawable/setting_tel"
-                android:scaleType="fitCenter"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"/>
-        </RelativeLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:text="@string/feed_back"
+                        android:textColor="@color/basic_white"
+                        android:textSize="14sp" />
 
-        <View
-            android:layout_marginLeft="@dimen/item_horizontal_margin"
-            android:layout_marginRight="@dimen/item_horizontal_margin"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorBasicLine" />
+                    <ImageView
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/setting_mail" />
 
-        <RelativeLayout
-            android:id="@+id/rLayoutMail"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/item_height">
+                </RelativeLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:textColor="@color/basic_white"
-                android:textSize="14sp"
-                android:text="@string/feed_back"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/item_horizontal_margin"
+                    android:layout_marginRight="@dimen/item_horizontal_margin"
+                    android:background="@color/colorBasicLine" />
 
-            <ImageView
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:src="@drawable/setting_mail"
-                android:scaleType="fitCenter"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"/>
+                <RelativeLayout
+                    android:id="@+id/rLayoutAbout"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/item_height"
+                    android:layout_marginBottom="5dp">
 
-        </RelativeLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:text="@string/about_hzbicycle"
+                        android:textColor="@color/basic_white"
+                        android:textSize="14sp" />
 
-        <View
-            android:layout_marginLeft="@dimen/item_horizontal_margin"
-            android:layout_marginRight="@dimen/item_horizontal_margin"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorBasicLine" />
+                    <ImageView
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/setting_about" />
 
-        <RelativeLayout
-            android:id="@+id/rLayoutAbout"
-            android:layout_marginBottom="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/item_height">
+                </RelativeLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:textColor="@color/basic_white"
-                android:textSize="14sp"
-                android:text="@string/about_hzbicycle"/>
+            </LinearLayout>
 
-            <ImageView
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:src="@drawable/setting_about"
-                android:scaleType="fitCenter"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"/>
-
-        </RelativeLayout>
-
-    </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

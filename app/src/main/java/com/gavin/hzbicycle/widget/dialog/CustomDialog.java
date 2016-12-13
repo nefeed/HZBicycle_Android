@@ -40,6 +40,7 @@ public class CustomDialog extends Dialog {
         private String mPositiveButtonText;
         private String mNegativeButtonText;
         private String mTitle;
+        private boolean mCancelable = false;
         private DialogInterface.OnClickListener mPositiveButtonClickListener;
         private DialogInterface.OnClickListener mNegativeButtonClickListener;
 
@@ -68,6 +69,11 @@ public class CustomDialog extends Dialog {
         }
 
         public Builder setContentView(View v) {
+            return this;
+        }
+
+        public Builder setCancelable(boolean cancelable) {
+            mCancelable = cancelable;
             return this;
         }
 
@@ -173,7 +179,8 @@ public class CustomDialog extends Dialog {
             }
             _dialog.setContentView(_layout);
 
-            _dialog.setCanceledOnTouchOutside(false); // 设置点击屏幕Dialog不消失
+            _dialog.setCancelable(mCancelable);
+            _dialog.setCanceledOnTouchOutside(mCancelable); // 设置点击屏幕Dialog不消失,默认为不可取消
 //            _dialog.setCancelable(false); // 设置不可 点击弹窗外部或点击返回键 关闭弹窗
             return _dialog;
         }

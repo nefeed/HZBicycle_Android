@@ -9,6 +9,8 @@ import android.os.Bundle
 import android.view.View
 import com.gavin.hzbicycle.R
 import com.gavin.hzbicycle.base.BaseActivity
+import com.gavin.hzbicycle.util.Util
+import kotlinx.android.synthetic.main.activity_about.*
 import kotlinx.android.synthetic.main.toolbar_normal_layout.*
 
 /**
@@ -21,14 +23,17 @@ import kotlinx.android.synthetic.main.toolbar_normal_layout.*
 class AboutActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_about)
         setupToolbar(toolbar)
         tvTitle.text = "关于HZBicycle"
-        super.onCreate(savedInstanceState)
+
+        tvVersion.text = Util.getAppVersionName(applicationContext)
+        tvBuild.text = "${Util.getAppVersionCode(applicationContext)}"
     }
 
     companion object {
-        fun startActivity(context: Context, view: View) {
+        fun startActivity(context: Context, view: View?) {
             val intent = Intent(context, AboutActivity::class.java)
             if (Build.VERSION.SDK_INT > 21) {
                 context.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(context as Activity, view, "about").toBundle())

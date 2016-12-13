@@ -1,8 +1,12 @@
 package com.gavin.hzbicycle.base;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.pm.ActivityInfo;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -12,6 +16,7 @@ import android.view.MotionEvent;
 import com.gavin.hzbicycle.R;
 import com.gavin.hzbicycle.data.bean.BaseView;
 import com.gavin.hzbicycle.util.slideBack.SlideWindowHelper;
+import com.gavin.hzbicycle.widget.dialog.CustomDialog;
 import com.gavin.hzbicycle.widget.toast.CustomToast;
 import com.umeng.analytics.MobclickAgent;
 
@@ -26,6 +31,12 @@ import org.jetbrains.annotations.NotNull;
  */
 public class BaseActivity extends AppCompatActivity implements BaseView {
     protected static final String TAG = "BaseActivity";
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    }
 
     @Override
     protected void onResume() {
@@ -105,6 +116,60 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
         }
         CustomToast.INSTANCE.showErrorToast(getApplicationContext(), msg);
     }
+
+    /**
+     * @param ctx
+     * @param title            字符串id (传 -1表示没有标题)
+     * @param msg              消息id  (传 -1表示没有消息)
+     * @param positiveBtn      右边按钮的内容
+     * @param negativeBtn      左边按钮的内容
+     * @param positiveListener 右边按钮的监听
+     * @param negativeListener 左边按钮的监听
+     */
+    public void createDialog(Context ctx, int title, int msg,
+                             int positiveBtn, int negativeBtn,
+                             DialogInterface.OnClickListener positiveListener,
+                             DialogInterface.OnClickListener negativeListener) {
+        if (msg != -1) {
+            createDialog(ctx, title, getString(msg), positiveBtn, negativeBtn, positiveListener, negativeListener);
+        }
+    }
+
+    public void createDialog(Context ctx, int title, String msg,
+                             int positiveBtn, int negativeBtn,
+                             DialogInterface.OnClickListener positiveListener,
+                             DialogInterface.OnClickListener negativeListener) {
+        CustomDialog.Builder _builder = new CustomDialog.Builder(ctx);
+        if (title != -1) {
+            _builder.setTitle(title);
+        }
+        if (msg != null) {
+            _builder.setMessage(msg);
+        }
+        if (positiveListener != null && positiveBtn != -1) {
+            _builder.setPositiveButton(positiveBtn, positiveListener);
+        }
+        if (negativeListener != null && negativeBtn != -1) {
+            _builder.setNegativeButton(negativeBtn, negativeListener);
+        }
+        _builder.setCancelable(false);
+        _builder.create().show();
+    }
+
+    public void createDialog(Context ctx, int title, int message, int positiveBtn, DialogInterface.OnClickListener positiveListener) {
+        createDialog(ctx, title, message, positiveBtn, R.string.dialog_cancel, positiveListener, mDialogNegativeListener);
+    }
+
+    public void createDialog(Context ctx, int title, String message, int positiveBtn, DialogInterface.OnClickListener positiveListener) {
+        createDialog(ctx, title, message, positiveBtn, R.string.dialog_cancel, positiveListener, mDialogNegativeListener);
+    }
+
+    private DialogInterface.OnClickListener mDialogNegativeListener = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            dialog.dismiss();
+        }
+    };
 
     /*********************
      * Toolbar begin
