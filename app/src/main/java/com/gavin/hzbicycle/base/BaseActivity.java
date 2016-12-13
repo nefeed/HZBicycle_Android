@@ -176,7 +176,7 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
      *********************/
     public void setupToolbar(Toolbar toolbar) {
         toolbar.setTitle("");
-        toolbar.setNavigationIcon(R.drawable.toolbar_back);
+        toolbar.setNavigationIcon(R.drawable.back_icon_selector);
         setSupportActionBar(toolbar);
 
     }
