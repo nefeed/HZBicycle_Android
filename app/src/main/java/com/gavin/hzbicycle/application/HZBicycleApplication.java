@@ -1,7 +1,7 @@
 package com.gavin.hzbicycle.application;
 
 import android.app.Activity;
-import android.app.Application;
+import android.support.multidex.MultiDexApplication;
 import android.view.View;
 
 import com.facebook.stetho.Stetho;
@@ -9,7 +9,7 @@ import com.orhanobut.logger.Logger;
 import com.orm.SugarContext;
 import com.umeng.analytics.MobclickAgent;
 
-public class HZBicycleApplication extends Application {
+public class HZBicycleApplication extends MultiDexApplication {
 
     private ActivityLifecycleHelper mActivityLifecycleHelper;
     private static HZBicycleApplication sInstance;

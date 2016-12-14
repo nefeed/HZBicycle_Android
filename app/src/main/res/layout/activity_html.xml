@@ -9,7 +9,7 @@
     <include layout="@layout/toolbar_normal_layout" />
 
 
-    <com.wingsofts.gankclient.ui.widget.ProgressWebView
+    <com.gavin.hzbicycle.widget.webview.ProgressWebView
         android:id="@+id/webView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

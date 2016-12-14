@@ -7,7 +7,7 @@ import com.orhanobut.logger.Logger;
  * 日志工具类
  */
 public class LogUtil {
-	private static boolean sDebug = BuildConfig.DEBUG;
+	private static boolean sDebug = BuildConfig.IS_LOG_SHOWN;
 
 	public static void i(String msg) {
 		if (sDebug)

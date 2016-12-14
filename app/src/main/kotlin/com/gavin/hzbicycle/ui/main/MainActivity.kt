@@ -114,8 +114,6 @@ class MainActivity : BaseActivity(), MainContract.View, AMap.InfoWindowAdapter {
         mAMap.setOnInfoWindowClickListener(_infoWindowListener)
         mAMap.setInfoWindowAdapter(this@MainActivity)
 
-        //启动定位  onResume（）中进行定位
-        mLocationClient.startLocation()
     }
 
     private val STROKE_COLOR = Color.argb(30, 16, 118, 244)
@@ -143,6 +141,8 @@ class MainActivity : BaseActivity(), MainContract.View, AMap.InfoWindowAdapter {
         super.onResume()
         //在activity执行onResume时执行mMapView.onResume ()，实现地图生命周期管理
         mMapView.onResume()
+        //启动定位  onResume（）中进行定位
+        mLocationClient.startLocation()
     }
 
     override fun onPause() {

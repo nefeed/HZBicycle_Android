@@ -133,6 +133,9 @@ class SettingActivity : BaseActivity() {
                     if (data.state == 6) { // 已经下载
                         btnOfflineMap.text = getString(R.string.setting_remove)
                         mIsDownloaded = true
+                    } else {
+                        btnOfflineMap.text = getString(R.string.setting_download)
+                        mIsDownloaded = false
                     }
                 })
     }

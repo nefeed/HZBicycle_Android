@@ -44,7 +44,7 @@ class WelcomeActivity : BaseActivity() {
             R.drawable.welcome_bg_05, R.drawable.welcome_bg_06,
             R.drawable.welcome_bg_07, R.drawable.welcome_bg_08,
             R.drawable.welcome_bg_09, R.drawable.welcome_bg_10) }
-    val mScaleAnims: Array<ScaleAnimation> by lazy { arrayOf(ScaleAnimation(1.1f, 1.4f, 1.1f, 1.4f,
+    val mScaleAnims: ArrayList<ScaleAnimation> by lazy { arrayListOf(ScaleAnimation(1.1f, 1.4f, 1.1f, 1.4f,
             Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.4f
             ),
             ScaleAnimation(1.4f, 1.1f, 1.4f, 1.1f,

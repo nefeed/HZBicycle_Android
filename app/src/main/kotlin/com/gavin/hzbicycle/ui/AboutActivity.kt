@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import com.gavin.hzbicycle.BuildConfig
 import com.gavin.hzbicycle.R
 import com.gavin.hzbicycle.base.BaseActivity
 import com.gavin.hzbicycle.util.Util
@@ -29,7 +30,9 @@ class AboutActivity : BaseActivity() {
         tvTitle.text = "关于HZBicycle"
 
         tvVersion.text = Util.getAppVersionName(applicationContext)
-        tvBuild.text = "${Util.getAppVersionCode(applicationContext)}"
+        val _buildStr: StringBuffer = StringBuffer("${Util.getAppVersionCode(applicationContext)}")
+        _buildStr.append(if (BuildConfig.DEBUG) "DEBUG" else "Release")
+        tvBuild.text = _buildStr.toString()
     }
 
     companion object {

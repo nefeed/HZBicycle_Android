@@ -11,6 +11,7 @@ android {
         targetSdkVersion 25
         versionCode 10
         versionName "1.0"
+        multiDexEnabled true
 //        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 //        externalNativeBuild {
 //            cmake {
@@ -30,11 +31,13 @@ android {
         debug {
             buildConfigField "String", "BASE_API_URL", "\"http://192.168.31.199:8080/\""
             buildConfigField "Boolean", "SWITCH_SERVER_URL", "true"
+            buildConfigField "Boolean", "IS_LOG_SHOWN", "true"
         }
 
         release {
             buildConfigField "String", "BASE_API_URL", "\"http://192.168.31.199:8080/\""
             buildConfigField "Boolean", "SWITCH_SERVER_URL", "false"
+            buildConfigField "Boolean", "IS_LOG_SHOWN", "false"
             signingConfig signingConfigs.release
             minifyEnabled true
             shrinkResources true
@@ -58,6 +61,8 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
+    // 解决Android 方法65k的限制
+    compile 'com.android.support:multidex:1.0.1'
     // Kotlin
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     // sdk15, sdk19, sdk21, sdk23 are also available
