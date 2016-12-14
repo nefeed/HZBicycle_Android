@@ -99,7 +99,6 @@ dependencies {
     compile 'com.facebook.stetho:stetho:1.4.1'
     // ButterKnife 界面控件的绑定器
     compile 'com.jakewharton:butterknife:8.4.0'
-    compile 'com.google.android.gms:play-services-ads:10.0.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
     // 国人发明的有趣的运行时权限获取
     compile 'com.yanzhenjie:permission:1.0.3'

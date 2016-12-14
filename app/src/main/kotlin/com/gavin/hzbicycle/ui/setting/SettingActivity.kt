@@ -166,7 +166,7 @@ class SettingActivity : BaseActivity() {
     private fun sendMailToAuthor() {
         val data = Intent(Intent.ACTION_SENDTO)
         data.data = Uri.parse("mailto:gavinchangcn@163.com")
-        data.putExtra(Intent.EXTRA_SUBJECT, "HZBicycle-意见反馈")
+        data.putExtra(Intent.EXTRA_SUBJECT, "杭州公骑君 -意见反馈")
         data.putExtra(Intent.EXTRA_TEXT, "意见反馈内容如下：\n")
         startActivity(data)
     }

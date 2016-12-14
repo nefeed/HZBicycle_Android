@@ -15,7 +15,7 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
-
+-keep class com.gavin.hzbicycle.**{*;}
 # 友盟分析 Begin
 -keepclassmembers class * {
    public <init> (org.json.JSONObject);

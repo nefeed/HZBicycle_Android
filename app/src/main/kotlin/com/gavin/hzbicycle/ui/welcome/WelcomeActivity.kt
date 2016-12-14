@@ -12,22 +12,13 @@ import com.gavin.hzbicycle.base.BaseActivity
 import com.gavin.hzbicycle.ui.main.MainActivity
 import com.gavin.hzbicycle.util.LogUtil
 import com.gavin.hzbicycle.util.PermissionsChecker
-import com.google.android.gms.ads.AdListener
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.InterstitialAd
 import com.yanzhenjie.permission.AndPermission
 import com.yanzhenjie.permission.PermissionNo
 import com.yanzhenjie.permission.PermissionYes
 import com.yanzhenjie.permission.RationaleListener
 import kotlinx.android.synthetic.main.activity_welcome.*
-import org.jetbrains.anko.activityUiThreadWithContext
-import org.jetbrains.anko.async
 import org.jetbrains.anko.startActivity
 import java.util.*
-
-
-
-
 
 
 /**
@@ -39,20 +30,27 @@ import java.util.*
  */
 class WelcomeActivity : BaseActivity() {
 
-    val mImages: IntArray by lazy { intArrayOf(R.drawable.welcome_bg_01, R.drawable.welcome_bg_02,
-            R.drawable.welcome_bg_03, R.drawable.welcome_bg_04,
-            R.drawable.welcome_bg_05, R.drawable.welcome_bg_06,
-            R.drawable.welcome_bg_07, R.drawable.welcome_bg_08,
-            R.drawable.welcome_bg_09, R.drawable.welcome_bg_10) }
-    val mScaleAnims: ArrayList<ScaleAnimation> by lazy { arrayListOf(ScaleAnimation(1.1f, 1.4f, 1.1f, 1.4f,
-            Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.4f
-            ),
-            ScaleAnimation(1.4f, 1.1f, 1.4f, 1.1f,
-            Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.4f)) }
+    val mImages: IntArray by lazy {
+        intArrayOf(R.drawable.welcome_bg_01, R.drawable.welcome_bg_02,
+                R.drawable.welcome_bg_03, R.drawable.welcome_bg_04,
+                R.drawable.welcome_bg_05, R.drawable.welcome_bg_06,
+                R.drawable.welcome_bg_07, R.drawable.welcome_bg_08,
+                R.drawable.welcome_bg_09, R.drawable.welcome_bg_10)
+    }
+    val mScaleAnims: ArrayList<ScaleAnimation> by lazy {
+        arrayListOf(ScaleAnimation(1.0f, 1.4f, 1.0f, 1.4f,
+                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.4f
+        ), ScaleAnimation(1.4f, 1.0f, 1.4f, 1.0f,
+                        Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.4f
+        ), ScaleAnimation(1.0f, 1.4f, 1.0f, 1.4f,
+                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.4f
+        ), ScaleAnimation(1.4f, 1.0f, 1.4f, 1.0f,
+                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.4f))
+    }
     var mStartIndex: Int = 0
     val mRandom by lazy { Random() }
 
-    val mInterstitialAd: InterstitialAd by lazy { InterstitialAd(applicationContext) }
+//    val mInterstitialAd: InterstitialAd by lazy { InterstitialAd(applicationContext) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,15 +58,15 @@ class WelcomeActivity : BaseActivity() {
 
         checkPermission()
 
-        mInterstitialAd.adUnitId = getString(R.string.interstitial_ad_welcome_id)
-        requestNewInterstitial()
-        mInterstitialAd.adListener = object: AdListener() {
-            override fun onAdClosed() {
-                super.onAdClosed()
-                requestNewInterstitial()
-                startMainActivity()
-            }
-        }
+//        mInterstitialAd.adUnitId = getString(R.string.interstitial_ad_welcome_id)
+//        requestNewInterstitial()
+//        mInterstitialAd.adListener = object: AdListener() {
+//            override fun onAdClosed() {
+//                super.onAdClosed()
+//                requestNewInterstitial()
+//                startMainActivity()
+//            }
+//        }
 
         var newStartIndex: Int
         do {
@@ -89,34 +87,41 @@ class WelcomeActivity : BaseActivity() {
         } while (newStartIndex == mStartIndex)
         mStartIndex = newStartIndex
         val _scaleAnim = mScaleAnims[mStartIndex % mScaleAnims.size]
+        _scaleAnim.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationRepeat(p0: Animation?) {
+
+            }
+
+            override fun onAnimationEnd(p0: Animation?) {
+                LogUtil.d("首页动画结束了！")
+                //                if (mInterstitialAd.isLoaded) {
+//                    mInterstitialAd.show()
+//                } else {
+//                    startMainActivity()
+//                }
+                startMainActivity()
+            }
+
+            override fun onAnimationStart(p0: Animation?) {
+                LogUtil.d("首页动画开始了！")
+            }
+        })
         wallPaper.startAnimation(_scaleAnim.apply {
-            repeatCount = 1
+            repeatCount = 0
             repeatMode = Animation.REVERSE
+            fillAfter = true
             duration = 1700
         })
     }
 
-    fun requestNewInterstitial() {
-        val adRequest: AdRequest = AdRequest.Builder()
-                .build()
-        mInterstitialAd.loadAd(adRequest)
-    }
+//    fun requestNewInterstitial() {
+//        val adRequest: AdRequest = AdRequest.Builder()
+//                .build()
+//        mInterstitialAd.loadAd(adRequest)
+//    }
 
     fun finishInitialize() {
         startAnimation()
-
-        async() {
-            Thread.sleep(1600)
-
-            activityUiThreadWithContext {
-                if (mInterstitialAd.isLoaded) {
-                    mInterstitialAd.show()
-                } else {
-                    startMainActivity()
-                }
-            }
-        }
-
     }
 
     fun startMainActivity() {

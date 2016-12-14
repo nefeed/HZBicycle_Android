@@ -52,6 +52,7 @@ class MainActivity : BaseActivity(), MainContract.View, AMap.InfoWindowAdapter {
     var mLongitude: Double = 0.toDouble() // 经度
 
     val mPresenter: MainContract.Presenter by lazy { MainPresenter(this@MainActivity) }
+    var mIsFirstLocation = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -114,6 +115,8 @@ class MainActivity : BaseActivity(), MainContract.View, AMap.InfoWindowAdapter {
         mAMap.setOnInfoWindowClickListener(_infoWindowListener)
         mAMap.setInfoWindowAdapter(this@MainActivity)
 
+        //启动定位  onResume（）中进行定位
+        mLocationClient.startLocation()
     }
 
     private val STROKE_COLOR = Color.argb(30, 16, 118, 244)
@@ -141,8 +144,6 @@ class MainActivity : BaseActivity(), MainContract.View, AMap.InfoWindowAdapter {
         super.onResume()
         //在activity执行onResume时执行mMapView.onResume ()，实现地图生命周期管理
         mMapView.onResume()
-        //启动定位  onResume（）中进行定位
-        mLocationClient.startLocation()
     }
 
     override fun onPause() {
@@ -254,6 +255,18 @@ class MainActivity : BaseActivity(), MainContract.View, AMap.InfoWindowAdapter {
             }
         }
 
+        if (mIsFirstLocation) {
+            Thread {
+                 run {
+                     Thread.sleep(300)
+                     runOnUiThread {
+                         //启动定位  onResume（）中进行定位
+                         mLocationClient.startLocation()
+                         mIsFirstLocation = false
+                     }
+                 }
+            }.start()
+        }
         pbLocation.visibility = View.GONE
         ibLocation.setImageResource(R.drawable.main_location)
         ibLocation.isEnabled = true

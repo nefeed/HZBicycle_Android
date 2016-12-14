@@ -97,8 +97,8 @@
 
         <!--This meta-data tag is required to use Google Play Services.-->
         <!-- Google Ads Begin -->
-        <meta-data android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+        <!--<meta-data android:name="com.google.android.gms.version"-->
+            <!--android:value="@integer/google_play_services_version" />-->
         <!-- Google Ads end -->
 
         <activity android:name=".ui.welcome.WelcomeActivity"
@@ -111,9 +111,9 @@
         </activity>
 
         <!--Include the AdActivity configChanges and theme. -->
-        <activity android:name="com.google.android.gms.ads.AdActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
-            android:theme="@android:style/Theme.Translucent" />
+        <!--<activity android:name="com.google.android.gms.ads.AdActivity"-->
+            <!--android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"-->
+            <!--android:theme="@android:style/Theme.Translucent" />-->
 
         <activity android:name=".ui.main.MainActivity"
             android:screenOrientation="portrait"

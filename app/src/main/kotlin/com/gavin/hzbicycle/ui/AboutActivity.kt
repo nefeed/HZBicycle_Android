@@ -27,11 +27,11 @@ class AboutActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_about)
         setupToolbar(toolbar)
-        tvTitle.text = "关于HZBicycle"
+        tvTitle.text = "关于 杭州公骑君"
 
         tvVersion.text = Util.getAppVersionName(applicationContext)
         val _buildStr: StringBuffer = StringBuffer("${Util.getAppVersionCode(applicationContext)}")
-        _buildStr.append(if (BuildConfig.DEBUG) "DEBUG" else "Release")
+        _buildStr.append("\t").append(if (BuildConfig.DEBUG) "DEBUG" else "Release")
         tvBuild.text = _buildStr.toString()
     }
 
