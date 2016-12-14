@@ -98,7 +98,7 @@ class SettingActivity : BaseActivity() {
                             mOfflineMapManager.downloadByCityName("hangzhou")
                         }
                         getString(R.string.setting_remove) -> {
-                            mOfflineMapManager.remove("hangzhou")
+                            removeOfflineMapDialog()
                         }
                     }
 
@@ -109,6 +109,13 @@ class SettingActivity : BaseActivity() {
                 R.id.rLayoutAbout -> AboutActivity.startActivity(this@SettingActivity, v)
             }
         }
+    }
+
+    private fun removeOfflineMapDialog() {
+
+        createDialog(this, R.string.advice, R.string.dialog_remove_offline_map_content,
+                R.string.dialog_ok,
+                mRemovePositiveListener)
     }
 
     private fun checkHaveDownloaded() {
@@ -122,21 +129,24 @@ class SettingActivity : BaseActivity() {
                     LogUtil.i("下载的杭州离线地图的状态是：${data.state}")
                     mDownloadDataSize = data.size.toDouble() / 1024 / 1024
                     tvOfflineMapData.text = getString(R.string.setting_download_all_data, Util.formatEnglishDouble(mDownloadDataSize))
-                })
 
-        for (it in mOfflineMapManager.downloadOfflineMapCityList) {
-            if (it.code == HANGZHOU_CODE) {
-                    btnOfflineMap.text = getString(R.string.setting_remove)
-                    mIsDownloaded = true
-            }
-        }
-        
+                    if (data.state == 6) { // 已经下载
+                        btnOfflineMap.text = getString(R.string.setting_remove)
+                        mIsDownloaded = true
+                    }
+                })
     }
 
     private fun callForService() {
         createDialog(this, -1, getString(R.string.dialog_feedback_service_call_msg, PHONE_NUMBER_SERVICE),
                 R.string.dialog_service_call,
                 mServicePhoneNoPositiveListener)
+    }
+
+    private val mRemovePositiveListener = DialogInterface.OnClickListener { dialog, which ->
+        dialog.dismiss()
+
+        mOfflineMapManager.remove("hangzhou")
     }
 
     private val mServicePhoneNoPositiveListener = DialogInterface.OnClickListener { dialog, which ->

@@ -32,6 +32,8 @@
     <string name="dialog_cancel">取消</string>
     <string name="dialog_ok">确定</string>
     <string name="dialog_service_call">呼叫</string>
+    <string name="advice">提示</string>
+    <string name="dialog_remove_offline_map_content">删除后继续使用地图将需要消耗流量，是否确定删除？</string>
     <string name="requires_phone_call_permission">缺少电话相关权限，请进入 设置-应用程序-权限设置 中进行配置！</string>
     <string name="dialog_feedback_service_call_msg">&lt;font color = \'#333333\'&gt;客服热线&lt;/font&gt;&lt;br&gt;&lt;big&gt;&lt;big&gt;&lt;font color = \'#333333\'&gt;%s&lt;/font&gt;&lt;/big&gt;&lt;/big&gt;&lt;br&gt;&lt;small&gt;&lt;font color = \'#666666\'&gt;服务时间: 09:00-21:00&lt;/font&gt;&lt;/small&gt;</string>
 
