@@ -12,12 +12,14 @@ import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.view.View
+import android.widget.Button
 import android.widget.Toast
 import com.amap.api.maps.offlinemap.OfflineMapManager
 import com.amap.api.maps.offlinemap.OfflineMapStatus
 import com.gavin.hzbicycle.R
 import com.gavin.hzbicycle.base.BaseActivity
 import com.gavin.hzbicycle.util.LogUtil
+import com.gavin.hzbicycle.util.Util
 import com.gavin.hzbicycle.widget.button.NoDoubleClickListener
 import kotlinx.android.synthetic.main.activity_setting.*
 import kotlinx.android.synthetic.main.toolbar_normal_layout.*
@@ -43,6 +45,7 @@ class SettingActivity : BaseActivity() {
     val HANGZHOU_AD_CODE = "330100"
     val HANGZHOU_CODE = "0571"
 
+    var mDownloadDataSize: Double = 0.toDouble()
     val mClickListener: CustomClickListener by lazy { CustomClickListener() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,18 +56,22 @@ class SettingActivity : BaseActivity() {
 
         checkHaveDownloaded()
         btnOfflineMap.onClick {
-            v -> mClickListener.onNoDoubleClick(v)
+            v ->
+            mClickListener.onNoDoubleClick(v)
         }
 
         rLayoutPhone.onClick {
-            v -> mClickListener.onNoDoubleClick(v)
+            v ->
+            mClickListener.onNoDoubleClick(v)
         }
 
         rLayoutMail.onClick {
-            v -> mClickListener.onNoDoubleClick(v)
+            v ->
+            mClickListener.onNoDoubleClick(v)
         }
         rLayoutAbout.onClick {
-            v -> mClickListener.onNoDoubleClick(v)
+            v ->
+            mClickListener.onNoDoubleClick(v)
         }
 
     }
@@ -78,12 +85,23 @@ class SettingActivity : BaseActivity() {
         override fun onNoDoubleClick(v: View?) {
             when (v?.id) {
                 R.id.btnOfflineMap -> {
-                    if (mIsDownloaded) {
-                        mOfflineMapManager.remove("hangzhou")
-                    } else {
-                        btnOfflineMap.text = getString(R.string.setting_pause)
-                        mOfflineMapManager.downloadByCityName("hangzhou")
+                    when ((v as Button).text) {
+                        getString(R.string.setting_download) -> {
+                            btnOfflineMap.text = getString(R.string.setting_pause)
+                            mOfflineMapManager.downloadByCityName("hangzhou")
+                        }
+                        getString(R.string.setting_pause) -> {
+                            mOfflineMapManager.pause()
+                        }
+                        getString(R.string.setting_continue) -> {
+                            btnOfflineMap.text = getString(R.string.setting_pause)
+                            mOfflineMapManager.downloadByCityName("hangzhou")
+                        }
+                        getString(R.string.setting_remove) -> {
+                            mOfflineMapManager.remove("hangzhou")
+                        }
                     }
+
                 }
                 R.id.rLayoutPhone -> callForService()
 
@@ -94,18 +112,25 @@ class SettingActivity : BaseActivity() {
     }
 
     private fun checkHaveDownloaded() {
-        Observable.from(mOfflineMapManager.downloadOfflineMapCityList)
+        Observable.from(mOfflineMapManager.offlineMapCityList)
                 .filter({ data ->
                     data.code == HANGZHOU_CODE
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ data ->
-                    btnOfflineMap.text = getString(R.string.setting_remove)
-                    mIsDownloaded = true
+                    LogUtil.i("下载的杭州离线地图的状态是：${data.state}")
+                    mDownloadDataSize = data.size.toDouble() / 1024 / 1024
+                    tvOfflineMapData.text = getString(R.string.setting_download_all_data, Util.formatEnglishDouble(mDownloadDataSize))
                 })
 
-
+        for (it in mOfflineMapManager.downloadOfflineMapCityList) {
+            if (it.code == HANGZHOU_CODE) {
+                    btnOfflineMap.text = getString(R.string.setting_remove)
+                    mIsDownloaded = true
+            }
+        }
+        
     }
 
     private fun callForService() {
@@ -140,13 +165,23 @@ class SettingActivity : BaseActivity() {
                     LogUtil.i("下载完成，completeCode：$completeCode，downName：$downName")
                     btnOfflineMap.text = getString(R.string.setting_remove)
                     mIsDownloaded = true
+
+                    tvOfflineMapDownloading.visibility = View.GONE
+                    tvOfflineMapDownloading.text = getString(R.string.setting_download_data_loading, 0.toString())
                 }
-                OfflineMapStatus.LOADING -> LogUtil.d("amap-download", "download: " + completeCode + "%" + ","
-                        + downName)
+                OfflineMapStatus.LOADING -> {
+                    LogUtil.d("amap-download", "download: " + completeCode + "%" + ","
+                            + downName)
+                    tvOfflineMapDownloading.visibility = View.VISIBLE
+                    tvOfflineMapDownloading.text = getString(R.string.setting_download_data_loading, Util.formatEnglishDouble(mDownloadDataSize * completeCode / 100.toDouble()))
+                }
                 OfflineMapStatus.UNZIP -> LogUtil.d("amap-unzip", "unzip: $completeCode%,$downName")
                 OfflineMapStatus.WAITING -> LogUtil.d("amap-waiting", "WAITING: " + completeCode + "%" + ","
                         + downName)
-                OfflineMapStatus.PAUSE -> LogUtil.d("amap-pause", "pause: $completeCode%,$downName")
+                OfflineMapStatus.PAUSE -> {
+                    LogUtil.d("amap-pause", "pause: $completeCode%,$downName")
+                    btnOfflineMap.text = getString(R.string.setting_continue)
+                }
                 OfflineMapStatus.STOP -> {
                 }
                 OfflineMapStatus.ERROR -> LogUtil.e("amap-download", "download: " + " ERROR " + downName)

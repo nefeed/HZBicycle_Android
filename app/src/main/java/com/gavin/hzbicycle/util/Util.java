@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
+import java.text.DecimalFormat;
+
 /**
  * User: Gavin
  * E-mail: GavinChangCN@163.com
@@ -34,5 +36,32 @@ public class Util {
             e.printStackTrace();
             return 0;
         }
+    }
+
+    /**
+     * 按照英语系数字计数法三位数字一个分隔符进行数字规范，浮点类型
+     *
+     * @param value
+     * @return
+     */
+    public static String formatEnglishDouble(Double value) {
+        if (value == null) {
+            return "0.00";
+        }
+        DecimalFormat _df = new DecimalFormat("###,##0.00");
+        String _fv = _df.format(value);
+        return _fv.equals(".00") ? "0.00" : _fv;
+    }
+
+    /**
+     * 按照英语系数字计数法三位数字一个分隔符进行数字规范，整形类型
+     *
+     * @param value
+     * @return
+     */
+    public static String formatEnglishInt(int value) {
+        DecimalFormat _df = new DecimalFormat("###,##0");
+        String _fv = _df.format(value);
+        return _fv.equals("") ? "0" : _fv;
     }
 }

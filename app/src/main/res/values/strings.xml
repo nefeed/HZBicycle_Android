@@ -25,7 +25,10 @@
     <string name="city_hangzhou">杭州</string>
     <string name="setting_download">下载</string>
     <string name="setting_remove">删除</string>
-    <string name="setting_pause">删除</string>
+    <string name="setting_pause">暂停</string>
+    <string name="setting_continue">继续</string>
+    <string name="setting_download_data_loading">%1$s/ </string>
+    <string name="setting_download_all_data">%1$s MB</string>
     <string name="dialog_cancel">取消</string>
     <string name="dialog_ok">确定</string>
     <string name="dialog_service_call">呼叫</string>
