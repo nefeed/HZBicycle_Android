@@ -96,6 +96,19 @@
                 android:text="@string/about_hz_bicycle_one_more_thing"
                 android:textColor="@color/colorPrimary"
                 android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tvGithubRepository"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/activity_vertical_margin"
+                android:paddingRight="@dimen/activity_vertical_margin"
+                android:gravity="center_horizontal"
+                android:layout_below="@+id/tvOneMoreThing"
+                android:layout_marginTop="80dp"
+                android:autoLink="all"
+                android:textColor="@drawable/blue_press_selector"
+                android:text="@string/show_github_repository"/>
         </RelativeLayout>
 
     </ScrollView>

@@ -6,13 +6,17 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.style.UnderlineSpan
 import android.view.View
 import com.gavin.hzbicycle.BuildConfig
 import com.gavin.hzbicycle.R
 import com.gavin.hzbicycle.base.BaseActivity
 import com.gavin.hzbicycle.util.Util
+import com.gavin.hzbicycle.widget.button.NoDoubleClickListener
 import kotlinx.android.synthetic.main.activity_about.*
 import kotlinx.android.synthetic.main.toolbar_normal_layout.*
+import org.jetbrains.anko.onClick
 
 /**
  * User: Gavin
@@ -22,6 +26,9 @@ import kotlinx.android.synthetic.main.toolbar_normal_layout.*
  * Time: 17:15
  */
 class AboutActivity : BaseActivity() {
+
+
+    val mClickListener: AboutActivity.CustomClickListener by lazy { CustomClickListener() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +40,23 @@ class AboutActivity : BaseActivity() {
         val _buildStr: StringBuffer = StringBuffer("${Util.getAppVersionCode(applicationContext)}")
         _buildStr.append("\t").append(if (BuildConfig.DEBUG) "DEBUG" else "Release")
         tvBuild.text = _buildStr.toString()
+        val _showGithubStr = getString(R.string.show_github_repository)
+        val _showGithubSS : SpannableString = SpannableString(_showGithubStr)
+        _showGithubSS.setSpan(UnderlineSpan(), 0 , _showGithubStr.length, 0)
+        tvGithubRepository.text = _showGithubSS
+        tvGithubRepository.onClick { v -> mClickListener.onNoDoubleClick(v) }
+    }
+
+    private fun showGithubRepository(view: View?) {
+        HtmlActivity.startActivity(this@AboutActivity, view, getString(R.string.github_repository_url))
+    }
+
+    inner class CustomClickListener : NoDoubleClickListener() {
+        override fun onNoDoubleClick(v: View?) {
+            when (v?.id) {
+                R.id.tvGithubRepository -> showGithubRepository(v)
+            }
+        }
     }
 
     companion object {
