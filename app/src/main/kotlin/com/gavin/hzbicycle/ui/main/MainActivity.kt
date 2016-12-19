@@ -1,11 +1,13 @@
 package com.gavin.hzbicycle.ui.main
 
+import android.content.DialogInterface
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Bundle
 import android.text.SpannableString
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import com.amap.api.location.AMapLocationClient
 import com.amap.api.location.AMapLocationClientOption
 import com.amap.api.location.AMapLocationListener
@@ -14,18 +16,18 @@ import com.amap.api.maps.AMap.OnInfoWindowClickListener
 import com.amap.api.maps.model.*
 import com.gavin.hzbicycle.R
 import com.gavin.hzbicycle.base.BaseActivity
+import com.gavin.hzbicycle.data.PreferenceRepository
 import com.gavin.hzbicycle.data.bean.BicycleStationBean
 import com.gavin.hzbicycle.ui.SettingActivity
 import com.gavin.hzbicycle.ui.search.SearchActivity
-import com.gavin.hzbicycle.util.GCJ2WGS
 import com.gavin.hzbicycle.util.LogUtil
 import com.gavin.hzbicycle.widget.button.NoDoubleClickListener
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.onClick
+import rx.Observable
+import rx.schedulers.Schedulers
 import java.text.SimpleDateFormat
 import java.util.*
-
-
 
 
 /**
@@ -47,7 +49,7 @@ class MainActivity : BaseActivity(), MainContract.View, AMap.InfoWindowAdapter {
 
     // 自定义的 View 防双击点击事件
     val mClickListener: CustomClickListener by lazy { CustomClickListener() }
-    val mConverter:CoordinateConverter by lazy {CoordinateConverter(applicationContext)}
+    val mConverter: CoordinateConverter by lazy { CoordinateConverter(applicationContext) }
 
     var mLatitude: Double = 0.toDouble() // 纬度
     var mLongitude: Double = 0.toDouble() // 经度
@@ -109,16 +111,25 @@ class MainActivity : BaseActivity(), MainContract.View, AMap.InfoWindowAdapter {
 
         mAMap.isMyLocationEnabled = true // 进入时默认触发高德定位
 
-        val _infoWindowListener = OnInfoWindowClickListener { marker ->  }
+        val _infoWindowListener = OnInfoWindowClickListener { marker -> }
         val _markerClickListener = AMap.OnMarkerClickListener { marker -> false }
 
         // 绑定Marker信息窗点击事件
         mAMap.setOnMarkerClickListener(_markerClickListener)
         mAMap.setOnInfoWindowClickListener(_infoWindowListener)
+        mAMap.setOnMapLongClickListener { latlon ->
+            LogUtil.d("获取的长按地点的坐标为：（${latlon.latitude}，${latlon.longitude})")
+            mLatitude = latlon.latitude
+            mLongitude = latlon.longitude
+            createDialog(this, R.string.advice, R.string.dialog_long_click_map_search_content,
+                    R.string.dialog_ok,
+                    mMapLongClickSearchListener)
+        }
         mAMap.setInfoWindowAdapter(this@MainActivity)
 
         //启动定位  onResume（）中进行定位
         mLocationClient.startLocation()
+
     }
 
     private val STROKE_COLOR = Color.argb(30, 16, 118, 244)
@@ -236,14 +247,7 @@ class MainActivity : BaseActivity(), MainContract.View, AMap.InfoWindowAdapter {
                 mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(mLatitude, mLongitude), 16f))
                 //点击定位按钮 能够将地图的中心移动到定位点
                 mLocationChangeListener?.onLocationChanged(amapLocation)
-                // CoordType.GPS 待转换坐标类型
-                mConverter.from(CoordinateConverter.CoordType.BAIDU)
-                val _location :LatLng = GCJ2WGS.convert(mLatitude, mLongitude)
-                for (it in mMarkerArray) {
-                    it.remove()
-                }
-                mMarkerArray.clear()
-                mPresenter.loadNearbyBicycleStationData(_location.latitude, _location.longitude)
+                mPresenter.loadNearbyBicycleStationData(mLatitude, mLongitude)
 
 //                val markerOptions = MarkerOptions()
 //                markerOptions.position(LatLng(mLatitude, mLongitude))
@@ -259,15 +263,25 @@ class MainActivity : BaseActivity(), MainContract.View, AMap.InfoWindowAdapter {
         }
 
         if (mIsFirstLocation) {
+            Observable.just(PreferenceRepository.INSTANCE.appStartNumber())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(Schedulers.io())
+                    .subscribe({number -> PreferenceRepository.INSTANCE.appStartNumberPlus(number) })
             Thread {
-                 run {
-                     Thread.sleep(300)
-                     runOnUiThread {
-                         //启动定位  onResume（）中进行定位
-                         mLocationClient.startLocation()
-                         mIsFirstLocation = false
-                     }
-                 }
+                run {
+                    Thread.sleep(300)
+                    runOnUiThread {
+                        //启动定位  onResume（）中进行定位
+                        mLocationClient.startLocation()
+                        mIsFirstLocation = false
+                        // 每打开5次，进行一次提醒
+                        if ((PreferenceRepository.INSTANCE.appStartNumber() + 7) % 8 == 0) {
+                            Toast.makeText(this@MainActivity,
+                                    R.string.toast_long_click_map_search_content, Toast.LENGTH_SHORT)
+                                    .show()
+                        }
+                    }
+                }
             }.start()
         }
         pbLocation.visibility = View.GONE
@@ -277,8 +291,13 @@ class MainActivity : BaseActivity(), MainContract.View, AMap.InfoWindowAdapter {
 
     val mMarkerArray by lazy { ArrayList<Marker>() }
     override fun updateNearbyBicycleStationData(data: ArrayList<BicycleStationBean>) {
+        for (it in mMarkerArray) {
+            it.remove()
+        }
+        mMarkerArray.clear()
+        // CoordType.GPS 待转换坐标类型
+        mConverter.from(CoordinateConverter.CoordType.BAIDU)
         for (it in data) {
-
             // sourceLatLng待转换坐标点 LatLng类型
             mConverter.coord(LatLng(it.lat, it.lon))
             // 执行转换操作
@@ -289,11 +308,19 @@ class MainActivity : BaseActivity(), MainContract.View, AMap.InfoWindowAdapter {
                     .title("  ${it.name}(编号：${it.number})  ")
                     .snippet("  可借：${it.rentcount}    可还：${it.restorecount}")
                     .icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(resources, R.drawable.main_bicycle)))
-            val _marker:Marker = mAMap.addMarker(_markOptions)
+            val _marker: Marker = mAMap.addMarker(_markOptions)
             mMarkerArray.add(_marker)
         }
         if (mMarkerArray.size > 0) {
             mMarkerArray[0].showInfoWindow()
+        }
+    }
+
+    private val mMapLongClickSearchListener by lazy {
+        DialogInterface.OnClickListener { dialog, which ->
+            dialog.dismiss()
+
+            mPresenter.loadNearbyBicycleStationData(mLatitude, mLongitude)
         }
     }
 

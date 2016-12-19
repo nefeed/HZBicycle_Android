@@ -22,6 +22,7 @@
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginTop="60dp"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:visibility="gone"
             android:text="@string/search_hint"
             android:textColor="@color/colorBasicTextShallow"
             android:background="@drawable/background_setting_button_normal_rectangle"/>

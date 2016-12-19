@@ -146,10 +146,12 @@ class SettingActivity : BaseActivity() {
                 mServicePhoneNoPositiveListener)
     }
 
-    private val mRemovePositiveListener = DialogInterface.OnClickListener { dialog, which ->
-        dialog.dismiss()
+    private val mRemovePositiveListener by lazy {
+        DialogInterface.OnClickListener { dialog, which ->
+            dialog.dismiss()
 
-        mOfflineMapManager.remove("hangzhou")
+            mOfflineMapManager.remove("hangzhou")
+        }
     }
 
     private val mServicePhoneNoPositiveListener = DialogInterface.OnClickListener { dialog, which ->

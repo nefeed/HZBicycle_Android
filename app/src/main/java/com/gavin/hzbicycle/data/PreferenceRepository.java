@@ -47,6 +47,19 @@ public enum PreferenceRepository {
         return PreferenceLocalDataSource.INSTANCE.getDeivceToken();
     }
 
+    public int appStartNumber() {return PreferenceLocalDataSource.INSTANCE.appStartNumber(); }
+
+    public void appStartNumberPlus(int number) {
+        int _time = 1;
+        number++;
+        while (!PreferenceLocalDataSource.INSTANCE.appStartNumber(number)) {
+            _time ++;
+            if (_time == 5)
+                break;
+            PreferenceLocalDataSource.INSTANCE.appStartNumber(number);
+        }
+    }
+
     /**
      * 保存device token
      */

@@ -41,6 +41,10 @@
 
     <string name="webview_open_outside">使用系统浏览器打开网页</string>
 
+    <!-- long click map search begin -->
+    <string name="toast_long_click_map_search_content">长按地图某处试试？</string>
+    <string name="dialog_long_click_map_search_content">以长按位置为中心点查找附近租赁点吗？</string>
+    <!-- long click map search end -->
     <!-- search begin -->
     <string name="search_hint">请输入站点名或编号</string>
     <!-- search end -->

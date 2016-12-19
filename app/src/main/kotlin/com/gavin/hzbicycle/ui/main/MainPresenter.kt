@@ -1,6 +1,8 @@
 package com.gavin.hzbicycle.ui.main
 
+import com.amap.api.maps.model.LatLng
 import com.gavin.hzbicycle.data.source.BicycleRepository
+import com.gavin.hzbicycle.util.GCJ2WGS
 import com.gavin.hzbicycle.util.LogUtil
 import com.gavin.hzbicycle.util.gsonUtil.GsonUtil
 import rx.android.schedulers.AndroidSchedulers
@@ -23,7 +25,8 @@ class MainPresenter(val mView : MainContract.View) : MainContract.Presenter {
     }
 
     override fun loadNearbyBicycleStationData(lat: Double, lng: Double, len: Int) {
-        BicycleRepository.INSTANCE.loadNearbyStationData(lat, lng, len)
+        val _location : LatLng = GCJ2WGS.convert(lat, lng)
+        BicycleRepository.INSTANCE.loadNearbyStationData(_location.latitude, _location.longitude, len)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe( { data ->

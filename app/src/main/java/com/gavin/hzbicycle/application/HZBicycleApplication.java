@@ -5,6 +5,7 @@ import android.support.multidex.MultiDexApplication;
 import android.view.View;
 
 import com.facebook.stetho.Stetho;
+import com.gavin.hzbicycle.data.PreferenceRepository;
 import com.orhanobut.logger.Logger;
 import com.orm.SugarContext;
 import com.umeng.analytics.MobclickAgent;
@@ -27,6 +28,7 @@ public class HZBicycleApplication extends MultiDexApplication {
         sInstance = this;
         Logger.init("HZBicycler");
         registerActivityLifecycleCallbacks(mActivityLifecycleHelper = new ActivityLifecycleHelper());
+        PreferenceRepository.INSTANCE.buildPreferenceHelper(this);
         SugarContext.init(this);
         initStetho();
         Foreground.init(this);

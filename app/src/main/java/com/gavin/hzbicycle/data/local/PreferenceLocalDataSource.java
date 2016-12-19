@@ -19,11 +19,12 @@ import java.util.UUID;
 public enum PreferenceLocalDataSource {
     INSTANCE;
 
-    private static final String KEY_ROOT_URL = "Rivendell.rootUrl";
-    private static final String KEY_DEVICE_ID = "Rivendell.deviceId";
-    private static final String KEY_DEVICE_TOKEN = "Rivendell.deviceToken";
-    private static final String KEY_APP_SHARE_INFO = "Rivendell.appShareInfo";
-    private static final String KEY_MAIN_LAUNCHED = "Rivendell.mainLaunched";
+    private static final String KEY_ROOT_URL = "HZBicycle.rootUrl";
+    private static final String KEY_DEVICE_ID = "HZBicycle.deviceId";
+    private static final String KEY_DEVICE_TOKEN = "HZBicycle.deviceToken";
+    private static final String KEY_APP_SHARE_INFO = "HZBicycle.appShareInfo";
+    private static final String KEY_APP_START_NUMBER = "HZBicycle.appStartNumber";
+    private static final String KEY_MAIN_LAUNCHED = "HZBicycle.mainLaunched";
 
     private SharedPreferences mSharedPreferences;
 
@@ -37,14 +38,14 @@ public enum PreferenceLocalDataSource {
     }
 
     public void clear() {
-        mSharedPreferences.edit().clear().commit();
+        mSharedPreferences.edit().clear().apply();
     }
 
     /**
      * 设置服务器地址
      */
     public void setRootUrl(String url) {
-        mSharedPreferences.edit().putString(KEY_ROOT_URL, url).commit();
+        mSharedPreferences.edit().putString(KEY_ROOT_URL, url).apply();
     }
 
     /**
@@ -79,7 +80,7 @@ public enum PreferenceLocalDataSource {
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
-        mSharedPreferences.edit().putString(KEY_DEVICE_ID, _uuid.toString()).commit();
+        mSharedPreferences.edit().putString(KEY_DEVICE_ID, _uuid.toString()).apply();
     }
 
 
@@ -94,7 +95,7 @@ public enum PreferenceLocalDataSource {
      * 保存device token
      */
     public void setDeviceToken(String deviceToken) {
-        mSharedPreferences.edit().putString(KEY_DEVICE_TOKEN, deviceToken).commit();
+        mSharedPreferences.edit().putString(KEY_DEVICE_TOKEN, deviceToken).apply();
     }
 
     public void saveMainActivityLaunched(boolean launched) {
@@ -107,4 +108,11 @@ public enum PreferenceLocalDataSource {
         return mSharedPreferences.getBoolean(KEY_MAIN_LAUNCHED, false);
     }
 
+    public int appStartNumber() {
+        return mSharedPreferences.getInt(KEY_APP_START_NUMBER, 0);
+    }
+
+    public boolean appStartNumber(int number) {
+        return mSharedPreferences.edit().putInt(KEY_APP_START_NUMBER, number).commit();
+    }
 }
