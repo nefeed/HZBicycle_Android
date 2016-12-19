@@ -35,7 +35,10 @@ class WelcomeActivity : BaseActivity() {
                 R.drawable.welcome_bg_03, R.drawable.welcome_bg_04,
                 R.drawable.welcome_bg_05, R.drawable.welcome_bg_06,
                 R.drawable.welcome_bg_07, R.drawable.welcome_bg_08,
-                R.drawable.welcome_bg_09, R.drawable.welcome_bg_10)
+                R.drawable.welcome_bg_09, R.drawable.welcome_bg_10,
+                R.drawable.welcome_bg_11, R.drawable.welcome_bg_12,
+                R.drawable.welcome_bg_13, R.drawable.welcome_bg_14,
+                R.drawable.welcome_bg_15, R.drawable.welcome_bg_16)
     }
     val mScaleAnims: ArrayList<ScaleAnimation> by lazy {
         arrayListOf(ScaleAnimation(1.0f, 1.4f, 1.0f, 1.4f,
