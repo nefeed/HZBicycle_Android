@@ -307,7 +307,9 @@ class MainActivity : BaseActivity(), MainContract.View, AMap.InfoWindowAdapter {
                     .draggable(false)
                     .title("  ${it.name}(编号：${it.number})  ")
                     .snippet("  可借：${it.rentcount}    可还：${it.restorecount}")
-                    .icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(resources, R.drawable.main_bicycle_marker)))
+                    .icon(BitmapDescriptorFactory
+                            .fromBitmap(BitmapFactory
+                                    .decodeResource(resources, R.drawable.main_bicycle_marker)))
             val _marker: Marker = mAMap.addMarker(_markOptions)
             mMarkerArray.add(_marker)
         }
