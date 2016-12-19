@@ -16,6 +16,7 @@ import com.gavin.hzbicycle.R
 import com.gavin.hzbicycle.base.BaseActivity
 import com.gavin.hzbicycle.data.bean.BicycleStationBean
 import com.gavin.hzbicycle.ui.SettingActivity
+import com.gavin.hzbicycle.ui.search.SearchActivity
 import com.gavin.hzbicycle.util.GCJ2WGS
 import com.gavin.hzbicycle.util.LogUtil
 import com.gavin.hzbicycle.widget.button.NoDoubleClickListener
@@ -59,6 +60,7 @@ class MainActivity : BaseActivity(), MainContract.View, AMap.InfoWindowAdapter {
         setContentView(R.layout.activity_main)
         initAMap(savedInstanceState)
         ibSetting.setOnClickListener(mClickListener)
+        btnSearch.setOnClickListener(mClickListener)
     }
 
     /**
@@ -167,12 +169,13 @@ class MainActivity : BaseActivity(), MainContract.View, AMap.InfoWindowAdapter {
     }
 
     inner class CustomClickListener : NoDoubleClickListener() {
-        override fun onNoDoubleClick(v: View?) {
-            when (v?.id) {
+        override fun onNoDoubleClick(v: View) {
+            when (v.id) {
                 R.id.ibSetting -> {
-                    if (v != null) {
-                        SettingActivity.startActivity(this@MainActivity, v)
-                    }
+                    SettingActivity.startActivity(this@MainActivity, v)
+                }
+                R.id.btnSearch -> {
+                    SearchActivity.startActivity(this@MainActivity, v)
                 }
             }
         }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.gavin.hzbicycle" >
+    package="com.gavin.hzbicycle">
 
     <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
@@ -14,10 +14,10 @@
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
 
     <!-- 友盟 Analytics -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <!-- 友盟消息推送 -->
     <!-- 必选 -->
@@ -63,9 +63,9 @@
         android:name=".application.HZBicycleApplication"
         android:allowBackup="true"
         android:configChanges="orientation|keyboardHidden"
-        android:screenOrientation="portrait"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/ImmersedTheme"
         tools:replace="android:allowBackup">
@@ -85,24 +85,29 @@
         <!-- sugar db end -->
 
         <!-- Umeng analytics begin -->
-        <meta-data android:value="5840f930310c9378f600076e" android:name="UMENG_APPKEY"/>
-        <meta-data android:value="Umeng" android:name="UMENG_CHANNEL"/>
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5840f930310c9378f600076e" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="Umeng" />
         <!-- Umeng analytics end -->
 
         <!-- 高德地图 SDK Begin-->
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="e6f50c661c74bd4195b04439768910f3"/>
+            android:value="e6f50c661c74bd4195b04439768910f3" />
         <!-- 高德地图 SDK End -->
 
         <!--This meta-data tag is required to use Google Play Services.-->
         <!-- Google Ads Begin -->
         <!--<meta-data android:name="com.google.android.gms.version"-->
-            <!--android:value="@integer/google_play_services_version" />-->
+        <!--android:value="@integer/google_play_services_version" />-->
         <!-- Google Ads end -->
 
-        <activity android:name=".ui.welcome.WelcomeActivity"
-            android:theme="@style/ImmersedTheme" >
+        <activity
+            android:name=".ui.welcome.WelcomeActivity"
+            android:theme="@style/ImmersedTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -112,19 +117,24 @@
 
         <!--Include the AdActivity configChanges and theme. -->
         <!--<activity android:name="com.google.android.gms.ads.AdActivity"-->
-            <!--android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"-->
-            <!--android:theme="@android:style/Theme.Translucent" />-->
+        <!--android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"-->
+        <!--android:theme="@android:style/Theme.Translucent" />-->
 
-        <activity android:name=".ui.main.MainActivity"
+        <activity
+            android:name=".ui.main.MainActivity"
+            android:alwaysRetainTaskState="true"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/ImmersedTheme" />
-        <activity android:name=".ui.permission.PermissionActivity"
+        <activity
+            android:name=".ui.permission.PermissionActivity"
             android:theme="@style/ImmersedTheme" />
         <activity android:name=".ui.SettingActivity" />
-        <activity android:name=".ui.AboutActivity"/>
+        <activity android:name=".ui.AboutActivity" />
         <activity android:name=".ui.HtmlActivity" />
+        <activity android:name=".ui.search.SearchActivity" />
 
-        <service android:name="com.amap.api.location.APSService"/>
+        <service android:name="com.amap.api.location.APSService" />
     </application>
 
 </manifest>
