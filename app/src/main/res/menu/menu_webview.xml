@@ -5,7 +5,7 @@
     tools:context=".ui.HtmlActivity">
 
     <item android:id="@+id/menuOpenOutSide"
-        android:title="@string/webview_open_outside"
+        android:title="@string/web_view_open_outside"
         android:orderInCategory="80"
         android:icon="@drawable/webview_open_outside"
         app:showAsAction="ifRoom" />

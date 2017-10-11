@@ -35,11 +35,12 @@
     <string name="advice">提示</string>
     <string name="dialog_remove_offline_map_content">删除后继续使用地图将需要消耗流量，是否确定删除？</string>
     <string name="requires_phone_call_permission">缺少电话相关权限，请进入 设置-应用程序-权限设置 中进行配置！</string>
+
     <string name="dialog_feedback_service_call_msg">&lt;font color = \'#333333\'&gt;客服热线&lt;/font&gt;&lt;br&gt;&lt;big&gt;&lt;big&gt;&lt;font color = \'#333333\'&gt;%s&lt;/font&gt;&lt;/big&gt;&lt;/big&gt;&lt;br&gt;&lt;small&gt;&lt;font color = \'#666666\'&gt;服务时间: 24小时通勤&lt;/font&gt;&lt;/small&gt;</string>
     <string name="show_github_repository">查看 Github 仓库源代码</string>
     <string name="github_repository_url">https://github.com/GavinChangCN/HZBicycle_Android</string>
 
-    <string name="webview_open_outside">使用系统浏览器打开网页</string>
+    <string name="web_view_open_outside">使用系统浏览器打开网页</string>
 
     <!-- long click map search begin -->
     <string name="toast_long_click_map_search_content">长按地图某处试试？</string>

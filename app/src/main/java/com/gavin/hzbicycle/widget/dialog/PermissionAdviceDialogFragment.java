@@ -26,7 +26,7 @@ import butterknife.ButterKnife;
 public class PermissionAdviceDialogFragment extends DialogFragment {
     protected static final String TAG = "PermissionAdviceDialogFragment";
 
-    private boolean mIsLocationPermision = true;
+    private boolean mIsLocationPermission = true;
     private boolean mIsPhonePermission = true;
     private boolean mIsStoragePermission = true;
     private INoDataCallback mCallback;
@@ -68,7 +68,7 @@ public class PermissionAdviceDialogFragment extends DialogFragment {
     protected void initUI() {
         mIvStoragePermission.setVisibility(mIsStoragePermission? View.GONE : View.VISIBLE);
         mIvPhonePermission.setVisibility(mIsPhonePermission? View.GONE : View.VISIBLE);
-        mIvLocationPermission.setVisibility(mIsLocationPermision? View.GONE : View.VISIBLE);
+        mIvLocationPermission.setVisibility(mIsLocationPermission ? View.GONE : View.VISIBLE);
         mBtnPermissionAdvice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,7 +84,7 @@ public class PermissionAdviceDialogFragment extends DialogFragment {
     }
 
     public void setIsLocationPermision(boolean IsLocationPermision) {
-        this.mIsLocationPermision = IsLocationPermision;
+        this.mIsLocationPermission = IsLocationPermision;
     }
 
     public void setIsPhonePermission(boolean IsPhonePermission) {
