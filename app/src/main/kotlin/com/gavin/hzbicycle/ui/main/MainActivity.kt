@@ -23,7 +23,6 @@ import com.gavin.hzbicycle.ui.search.SearchActivity
 import com.gavin.hzbicycle.util.LogUtil
 import com.gavin.hzbicycle.widget.button.NoDoubleClickListener
 import kotlinx.android.synthetic.main.activity_main.*
-import org.jetbrains.anko.onClick
 import rx.Observable
 import rx.schedulers.Schedulers
 import java.text.SimpleDateFormat
@@ -101,7 +100,7 @@ class MainActivity : BaseActivity(), MainContract.View, AMap.InfoWindowAdapter {
 
         mAMap.setLocationSource(InnerLocationSource())
         mUiSettings.isMyLocationButtonEnabled = false // 是否显示高德自带的定位按钮
-        ibLocation.onClick {
+        ibLocation.setOnClickListener {
             ibLocation.isEnabled = false
             ibLocation.setImageResource(R.drawable.null_content)
             pbLocation.visibility = View.VISIBLE

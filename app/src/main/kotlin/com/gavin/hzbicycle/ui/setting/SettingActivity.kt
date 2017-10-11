@@ -24,7 +24,6 @@ import com.gavin.hzbicycle.widget.button.NoDoubleClickListener
 import kotlinx.android.synthetic.main.activity_setting.*
 import kotlinx.android.synthetic.main.toolbar_normal_layout.*
 import org.jetbrains.anko.ctx
-import org.jetbrains.anko.onClick
 import rx.Observable
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
@@ -55,21 +54,21 @@ class SettingActivity : BaseActivity() {
         tvTitle.text = "设置"
 
         checkHaveDownloaded()
-        btnOfflineMap.onClick {
+        btnOfflineMap.setOnClickListener {
             v ->
             mClickListener.onNoDoubleClick(v)
         }
 
-        rLayoutPhone.onClick {
+        rLayoutPhone.setOnClickListener {
             v ->
             mClickListener.onNoDoubleClick(v)
         }
 
-        rLayoutMail.onClick {
+        rLayoutMail.setOnClickListener {
             v ->
             mClickListener.onNoDoubleClick(v)
         }
-        rLayoutAbout.onClick {
+        rLayoutAbout.setOnClickListener {
             v ->
             mClickListener.onNoDoubleClick(v)
         }

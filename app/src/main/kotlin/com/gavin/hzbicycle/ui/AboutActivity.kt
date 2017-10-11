@@ -16,7 +16,6 @@ import com.gavin.hzbicycle.util.Util
 import com.gavin.hzbicycle.widget.button.NoDoubleClickListener
 import kotlinx.android.synthetic.main.activity_about.*
 import kotlinx.android.synthetic.main.toolbar_normal_layout.*
-import org.jetbrains.anko.onClick
 
 /**
  * User: Gavin
@@ -44,7 +43,7 @@ class AboutActivity : BaseActivity() {
         val _showGithubSS : SpannableString = SpannableString(_showGithubStr)
         _showGithubSS.setSpan(UnderlineSpan(), 0 , _showGithubStr.length, 0)
         tvGithubRepository.text = _showGithubSS
-        tvGithubRepository.onClick { v -> mClickListener.onNoDoubleClick(v) }
+        tvGithubRepository.setOnClickListener { v -> mClickListener.onNoDoubleClick(v) }
     }
 
     private fun showGithubRepository(view: View?) {
